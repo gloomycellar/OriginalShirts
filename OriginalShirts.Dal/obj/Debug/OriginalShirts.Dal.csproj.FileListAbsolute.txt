@@ -1,0 +1,10 @@
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\OriginalShirts.Dal.dll.config
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\OriginalShirts.Dal.dll
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\OriginalShirts.Dal.pdb
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\EntityFramework.dll
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\EntityFramework.xml
+C:\Projects\OriginalShirts\OriginalShirts.Dal\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\OriginalShirts\OriginalShirts.Dal\obj\Debug\OriginalShirts.Dal.csprojResolveAssemblyReference.cache
+C:\Projects\OriginalShirts\OriginalShirts.Dal\obj\Debug\OriginalShirts.Dal.dll
+C:\Projects\OriginalShirts\OriginalShirts.Dal\obj\Debug\OriginalShirts.Dal.pdb
