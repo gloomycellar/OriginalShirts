@@ -1,9 +1,7 @@
 ﻿using OriginalShirts.Dal;
 using OriginalShirts.Dal.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OriginalShirts.Controllers
@@ -28,6 +26,15 @@ namespace OriginalShirts.Controllers
             }
 
             return View(shirts);
+        }
+
+        public ActionResult Details(int id)
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Shirt shirt = context.Set<Shirt>().FirstOrDefault();
+                return View(shirt);
+            }
         }
 
         public ActionResult About()
