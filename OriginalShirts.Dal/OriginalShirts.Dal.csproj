@@ -50,12 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="DbInitializer\DatabaseInitializer.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\Shirt.cs" />
     <Compile Include="Models\Size.cs" />
     <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TagList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

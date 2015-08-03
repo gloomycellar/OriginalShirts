@@ -8,6 +8,13 @@ namespace OriginalShirts.Dal.Models
 {
     public class Tag : EntityBase
     {
+        public Tag() { }
+
+        public Tag(string name) : this()
+        {
+            Name = name;
+        }
+
         public string Name { get; set; }
     }
 }

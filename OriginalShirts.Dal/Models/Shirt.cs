@@ -9,6 +9,6 @@ namespace OriginalShirts.Dal.Models
         public string Image { get; set; }
         public Size Size { get; set; }
         public Color Color { get; set; }
-        public List<Tag> Tags { get; set; }
+        public TagList TagList { get; set; }
     }
 }

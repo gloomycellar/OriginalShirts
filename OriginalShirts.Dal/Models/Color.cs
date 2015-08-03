@@ -2,6 +2,13 @@
 {
     public class Color : EntityBase
     {
+        public Color() { }
+
+        public Color(string name)
+        {
+            Name = name;
+        }
+
         //White,
         //Black,
         //Red,
