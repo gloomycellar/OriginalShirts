@@ -2422,8 +2422,8 @@ h2.title {
 
 .contact-map {
   width: 100%;
-  height: 385px;
-  margin-bottom: 70px
+  /*height: 385px;*/
+  /*margin-bottom: 70px*/
 }
 
 .contact-info .heading, 
