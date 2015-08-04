@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OriginalShirts.Dal.Models
 {
     public class Tag : EntityBase
     {
-        public Tag() { }
+        public Tag() {
+            Shirts = new HashSet<Shirt>();
+        }
 
         public Tag(string name) : this()
         {
@@ -16,5 +15,7 @@ namespace OriginalShirts.Dal.Models
         }
 
         public string Name { get; set; }
+
+        public ICollection<Shirt> Shirts { get; set; }
     }
 }

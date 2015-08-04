@@ -23,9 +23,14 @@ namespace OriginalShirts.Controllers
                     shirts = context.Set<Shirt>().Where(x => x.Tags.Contains(tag)).ToList();
                 }
 
-            }
+                var a1 = shirts[0].Tags.ToList();
+                var a2 = shirts[1].Tags.ToList();
+                var a3 = shirts[2].Tags.ToList();
+                var a4 = shirts[3].Tags.ToList();
+                var a5 = shirts[4].Tags.ToList();
 
-            return View(shirts);
+                return View(shirts);
+            }
         }
 
         public ActionResult Details(int id)

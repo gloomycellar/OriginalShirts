@@ -1,4 +1,6 @@
-﻿namespace OriginalShirts.Dal.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace OriginalShirts.Dal.Models
 {
     public class Size : EntityBase
     {
