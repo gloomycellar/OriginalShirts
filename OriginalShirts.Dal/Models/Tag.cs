@@ -5,17 +5,22 @@ namespace OriginalShirts.Dal.Models
 {
     public class Tag : EntityBase
     {
-        public Tag() {
+        public Tag()
+        {
             Shirts = new HashSet<Shirt>();
+            Groups = new HashSet<TagGroup>();
         }
 
-        public Tag(string name) : this()
+        public Tag(string name, HashSet<TagGroup> groups) : this()
         {
             Name = name;
+            Groups = groups;
         }
 
         public string Name { get; set; }
 
         public ICollection<Shirt> Shirts { get; set; }
+
+        public ICollection<TagGroup> Groups { get; set; }
     }
 }

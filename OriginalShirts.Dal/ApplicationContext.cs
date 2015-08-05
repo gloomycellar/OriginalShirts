@@ -14,6 +14,7 @@ namespace OriginalShirts.Dal
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Tag> Tags{ get; set; }
+        public DbSet<TagGroup> TagsGroups { get; set; }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{

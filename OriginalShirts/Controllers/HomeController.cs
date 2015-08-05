@@ -17,26 +17,6 @@ namespace OriginalShirts.Controllers
 
             using (ApplicationContext context = new ApplicationContext())
             {
-                //IQueryable<Shirt> query = context.Set<Shirt>().Select(x => x);
-
-                //if (null != tag)
-                //{
-                //    query = query.Where(x => x.Tags.Contains(tag));
-                //}
-
-                //var result = query.Select(shirt => new
-                //{
-                //    Id = shirt.Id,
-                //    Color = shirt.Color,
-                //    Image = shirt.Image,
-                //    Name = shirt.Name,
-                //    Price = shirt.Price,
-                //    Size = shirt.Size,
-                //    Tags = shirt.Tags.ToList()
-                //}).ToList();
-
-                //return View(result);
-
                 IQueryable<Shirt> query = context.Set<Shirt>().Select(x => x);
 
                 if (!string.IsNullOrWhiteSpace(tag))
@@ -52,6 +32,12 @@ namespace OriginalShirts.Controllers
                 result.PageCount = Math.Ceiling((double)query.Count() / pageSize);
                 result.CurrentPage = page;
                 result.TagName = tag;
+
+                result.SportwearTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Sportwear")).ToList();
+                result.MensTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Mens")).ToList();
+                result.WomensTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Womens")).ToList();
+
+                result.TagsWithoutGroups = context.Set<Tag>().Where(x => x.Groups.Count == 0).ToList();
 
                 return View(result);
             }

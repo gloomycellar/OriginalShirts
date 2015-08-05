@@ -46,37 +46,57 @@ namespace OriginalShirts.Dal.Migrations
             context.Set<Color>().Add(Green);
             context.Set<Color>().Add(Pink);
 
-            Tag Nike = new Tag("Nike");
-            Tag UnderArmour = new Tag("Under Armour");
-            Tag Adidas = new Tag("Adidas");
-            Tag Puma = new Tag("Puma");
-            Tag Asics = new Tag("Asics");
-            Tag Sportwear = new Tag("Sportwear");
-            Tag Fendi = new Tag("Fendi");
-            Tag Guess = new Tag("Guess");
-            Tag Valentino = new Tag("Valentino");
-            Tag Versache = new Tag("Versache");
-            Tag Armani = new Tag("Armani");
-            Tag Prada = new Tag("Prada");
-            Tag DolceAndGabbana = new Tag("Dolce And Gabbana");
-            Tag Chanel = new Tag("Chanel");
-            Tag Gucci = new Tag("Gucci");
-            Tag Mens = new Tag("Mens");
-            Tag Womens = new Tag("Womens");
-            Tag Kids = new Tag("Kids");
-            Tag Fasion = new Tag("Fasion");
-            Tag Households = new Tag("Households");
-            Tag Interiors = new Tag("Interiors");
-            Tag Clothing = new Tag("Clothing");
-            Tag Bags = new Tag("Bags");
-            Tag Shoes = new Tag("Shoes");
+            context.Set<TagGroup>().Add(new TagGroup("Sportwear"));
+            context.Set<TagGroup>().Add(new TagGroup("Mens"));
+            context.Set<TagGroup>().Add(new TagGroup("Womens"));
+
+            context.SaveChanges();
+
+            HashSet<TagGroup> Sportwear = new HashSet<TagGroup>()
+            {
+                context.Set<TagGroup>().Where(x => x.Name == "Sportwear").First()
+            };
+
+            HashSet<TagGroup> MensWomens = new HashSet<TagGroup>()
+            {
+                context.Set<TagGroup>().Where(x => x.Name == "Mens").First(),
+                context.Set<TagGroup>().Where(x => x.Name == "Womens").First()
+            };
+
+            HashSet<TagGroup> Mens = new HashSet<TagGroup>()
+            {
+                context.Set<TagGroup>().Where(x => x.Name == "Mens").First()
+            };
+
+            Tag Nike = new Tag("Nike", Sportwear);
+            Tag UnderArmour = new Tag("Under Armour", Sportwear);
+            Tag Adidas = new Tag("Adidas", Sportwear);
+            Tag Puma = new Tag("Puma", Sportwear);
+            Tag Asics = new Tag("Asics", Sportwear);
+
+            Tag Fendi = new Tag("Fendi", MensWomens);
+            Tag Guess = new Tag("Guess", MensWomens);
+            Tag Valentino = new Tag("Valentino", MensWomens);
+            Tag Versache = new Tag("Versache", MensWomens);
+            Tag Armani = new Tag("Armani", Mens);
+            Tag Prada = new Tag("Prada", Mens);
+            Tag DolceAndGabbana = new Tag("Dolce And Gabbana", Mens);
+            Tag Chanel = new Tag("Chanel", Mens);
+            Tag Gucci = new Tag("Gucci", Mens);
+
+            Tag Kids = new Tag("Kids", null);
+            Tag Fasion = new Tag("Fasion", null);
+            Tag Households = new Tag("Households", null);
+            Tag Interiors = new Tag("Interiors", null);
+            Tag Clothing = new Tag("Clothing", null);
+            Tag Bags = new Tag("Bags", null);
+            Tag Shoes = new Tag("Shoes", null);
 
             context.Set<Tag>().Add(Nike);
             context.Set<Tag>().Add(UnderArmour);
             context.Set<Tag>().Add(Adidas);
             context.Set<Tag>().Add(Puma);
             context.Set<Tag>().Add(Asics);
-            context.Set<Tag>().Add(Sportwear);
             context.Set<Tag>().Add(Fendi);
             context.Set<Tag>().Add(Guess);
             context.Set<Tag>().Add(Valentino);
@@ -86,8 +106,6 @@ namespace OriginalShirts.Dal.Migrations
             context.Set<Tag>().Add(DolceAndGabbana);
             context.Set<Tag>().Add(Chanel);
             context.Set<Tag>().Add(Gucci);
-            context.Set<Tag>().Add(Mens);
-            context.Set<Tag>().Add(Womens);
             context.Set<Tag>().Add(Kids);
             context.Set<Tag>().Add(Fasion);
             context.Set<Tag>().Add(Households);
@@ -107,7 +125,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -134,7 +151,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -148,7 +164,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -162,7 +177,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -176,7 +190,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -190,7 +203,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -204,7 +216,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                   context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -218,7 +229,6 @@ namespace OriginalShirts.Dal.Migrations
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -227,12 +237,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product3.jpg",
+                Image = "images/home/product5.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -241,12 +250,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product2.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -255,12 +263,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                   context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -269,12 +276,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -283,12 +289,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -297,12 +302,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
                     context.Set<Tag>().Where(x => x.Name == "Nike").First()
                 }
             });
@@ -311,12 +315,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                     context.Set<Tag>().Where(x => x.Name == "Mens").First(),
                     context.Set<Tag>().Where(x => x.Name == "Dolce And Gabbana").First()
                 }
             });
@@ -325,7 +328,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -338,12 +341,11 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product1.jpg",
+                Image = "images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
                 {
-                    context.Set<Tag>().Where(x => x.Name == "Mens").First(),
                     context.Set<Tag>().Where(x => x.Name == "Fendi").First()
                 }
             });
