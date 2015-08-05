@@ -120,7 +120,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition 1",
                 Price = 56,
-                Image = "images/shop/product12.jpg",
+                Image = "/images/shop/product12.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -133,7 +133,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition 2",
                 Price = 56,
-                Image = "images/shop/product11.jpg",
+                Image = "/images/shop/product11.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -146,7 +146,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition 3",
                 Price = 56,
-                Image = "images/shop/product10.jpg",
+                Image = "/images/shop/product10.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -159,7 +159,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition 4",
                 Price = 56,
-                Image = "images/shop/product9.jpg",
+                Image = "/images/shop/product9.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -172,7 +172,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/shop/product8.jpg",
+                Image = "/images/shop/product8.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -185,7 +185,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/shop/product7.jpg",
+                Image = "/images/shop/product7.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -198,7 +198,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product6.jpg",
+                Image = "/images/home/product6.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -211,7 +211,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product5.jpg",
+                Image = "/images/home/product5.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -224,7 +224,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -237,7 +237,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product5.jpg",
+                Image = "/images/home/product5.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -250,7 +250,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -263,7 +263,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -276,7 +276,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -289,7 +289,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -302,7 +302,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -315,7 +315,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -328,7 +328,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
@@ -341,7 +341,7 @@ namespace OriginalShirts.Dal.Migrations
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
-                Image = "images/home/product4.jpg",
+                Image = "/images/home/product4.jpg",
                 Color = context.Set<Color>().Where(x => x.Name == "White").First(),
                 Size = context.Set<Size>().Where(x => x.Name == "XS").First(),
                 Tags = new List<Tag>()
