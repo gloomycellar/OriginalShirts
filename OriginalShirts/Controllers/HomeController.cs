@@ -11,7 +11,7 @@ namespace OriginalShirts.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(string tagName, int page = 1)
+        public ActionResult Index(string tag = null, int page = 1)
         {
             const int pageSize = 12;
 
@@ -39,9 +39,9 @@ namespace OriginalShirts.Controllers
 
                 IQueryable<Shirt> query = context.Set<Shirt>().Select(x => x);
 
-                if (!string.IsNullOrWhiteSpace(tagName))
+                if (!string.IsNullOrWhiteSpace(tag))
                 {
-                    query = query.Where(x => x.Tags.Any(t => t.Name == tagName));
+                    query = query.Where(x => x.Tags.Any(t => t.Name == tag));
                 }
 
                 Shirt[] shirts = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
@@ -51,6 +51,7 @@ namespace OriginalShirts.Controllers
                 result.Shirts = shirts;
                 result.PageCount = Math.Ceiling((double)query.Count() / pageSize);
                 result.CurrentPage = page;
+                result.TagName = tag;
 
                 return View(result);
             }
