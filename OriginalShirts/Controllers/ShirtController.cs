@@ -1,6 +1,7 @@
 ﻿using OriginalShirts.Dal;
-using OriginalShirts.Dal.Models;
-using System.Collections.Generic;
+using OriginalShirts.Domain;
+using System;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -8,24 +9,59 @@ namespace OriginalShirts.Controllers
 {
     public class ShirtController : Controller
     {
-        public ActionResult Index(Tag tag)
+        public ActionResult Index(string tag = null, int page = 1)
         {
-            List<Shirt> shirts = new List<Shirt>();
+            const int pageSize = 12;
 
             using (ApplicationContext context = new ApplicationContext())
             {
-                if (null != tag)
+                IQueryable<Shirt> query = context.Set<Shirt>().Select(x => x);
+
+                if (!string.IsNullOrWhiteSpace(tag))
                 {
-                    shirts = context.Set<Shirt>().ToList();
-                }
-                else
-                {
-                    shirts = context.Set<Shirt>().Where(x => x.Tags.Contains(tag)).ToList();
+                    query = query.Where(x => x.Tags.Any(t => t.Name == tag));
                 }
 
+                Shirt[] shirts = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
+
+
+                dynamic result = new ExpandoObject();
+                result.Shirts = shirts;
+                result.PageCount = Math.Ceiling((double)query.Count() / pageSize);
+                result.CurrentPage = page;
+                result.TagName = tag;
+
+                result.SportwearTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Sportwear")).ToList();
+                result.MensTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Mens")).ToList();
+                result.WomensTags = context.Set<Tag>().Where(x => x.Groups.Any(y => y.Name == "Womens")).ToList();
+
+                result.TagsWithoutGroups = context.Set<Tag>().Where(x => x.Groups.Count == 0).ToList();
+
+                return View(result);
             }
+        }
 
-            return View(shirts);
+        public ActionResult Details(int id)
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Shirt shirt = context.Set<Shirt>().FirstOrDefault();
+                return View(shirt);
+            }
+        }
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
         }
     }
 }

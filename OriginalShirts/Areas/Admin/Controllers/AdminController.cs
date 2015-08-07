@@ -1,10 +1,7 @@
 ﻿using OriginalShirts.Dal;
-using OriginalShirts.Dal.Models;
-using System;
-using System.Collections.Generic;
+using OriginalShirts.Domain;
 using System.Dynamic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace OriginalShirts.Areas.Admin.Controllers

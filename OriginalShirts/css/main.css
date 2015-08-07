@@ -2520,4 +2520,8 @@ h2.title {
   color: #FE980F;
 }
 
+/*--------------------------------------*/
 
+.validation-summary-errors ul {
+    padding: 0
+}

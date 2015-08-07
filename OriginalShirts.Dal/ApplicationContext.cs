@@ -1,11 +1,13 @@
-﻿using OriginalShirts.Dal.Models;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using OriginalShirts.Domain;
+using OriginalShirts.Domain.Account;
 using System.Data.Entity;
 
 namespace OriginalShirts.Dal
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext: IdentityDbContext<ApplicationUser>
     {
-        public ApplicationContext(): base("DefaultConnection")
+        public ApplicationContext(): base("DefaultConnection", throwIfV1Schema: false)
         {
             //this.Configuration.LazyLoadingEnabled = false;
         }
@@ -15,6 +17,13 @@ namespace OriginalShirts.Dal
         public DbSet<Color> Colors { get; set; }
         public DbSet<Tag> Tags{ get; set; }
         public DbSet<TagGroup> TagsGroups { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+
+        public static ApplicationContext Create()
+        {
+            return new ApplicationContext();
+        }
 
         //protected override void OnModelCreating(DbModelBuilder modelBuilder)
         //{
