@@ -89,11 +89,23 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href=""><i class="fa fa-user"></i> Account</a></li>
+                                @*<li><a href=""><i class="fa fa-user"></i> Account</a></li>*@
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <li><a href=""><i class="fa fa-user"></i>@User.Identity.Name</a></li>
+                                }
                                 <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                                <li><a href="/account/login"><i class="fa fa-lock"></i> Login</a></li>
+                                @Html.Partial("_LoginPartial")
+                                @*@if (Request.IsAuthenticated)
+                                {
+                                    <li><a href="/account/logoff"><i class="fa fa-lock"></i>Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="/account/login"><i class="fa fa-lock"></i> Login</a></li>
+                                }*@
                             </ul>
                         </div>
                     </div>
@@ -149,11 +161,11 @@
         </div>
     </header>
 
-    <section id="advertisement">
+    @*<section id="advertisement">
         <div class="container">
             <img src="/images/shop/advertisement.jpg" alt="" />
         </div>
-    </section>
+    </section>*@
 
     @RenderBody()   
 

@@ -8,6 +8,10 @@ namespace OriginalShirts.Domain
 {
     public class CartItem : EntityBase
     {
+        public CartItem()
+        {
+        }
+
         public CartItem(Shirt product, int quontity)
         {
             Product = product;

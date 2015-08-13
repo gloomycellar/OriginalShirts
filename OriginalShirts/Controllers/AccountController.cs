@@ -64,20 +64,38 @@ namespace OriginalShirts.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(LoginRegisterViewModel model, string returnUrl)
         {
+            LoginViewModel loginModel = model.LoginViewModel;
+
             if (!ModelState.IsValid)
             {
-                return View("LoginRegister", new LoginRegisterViewModel() { LoginViewModel = model });
+                return View("LoginRegister", model);
             }
+            else if (string.IsNullOrWhiteSpace(loginModel.LoginEmail) || string.IsNullOrWhiteSpace(loginModel.LoginPassword))
+            {
+                if (string.IsNullOrWhiteSpace(loginModel.LoginEmail))
+                {
+                    ModelState.AddModelError("LoginEmail", "Please, enter email.");
+                }
+
+                if (string.IsNullOrWhiteSpace(loginModel.LoginPassword))
+                {
+                    ModelState.AddModelError("LoginPassword", "Please, enter password.");
+                }
+
+                return View("LoginRegister", model);
+            }
+
+            string userName = UserManager.FindByEmail(loginModel.LoginEmail).UserName;
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(userName, loginModel.LoginPassword, loginModel.LoginRememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl ?? "/");
+                    return RedirectToLocal(returnUrl);
                 //case SignInStatus.LockedOut:
                 //    return View("Lockout");
                 //case SignInStatus.RequiresVerification:
@@ -85,7 +103,7 @@ namespace OriginalShirts.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Email or Password is incorrect. Please, try again.");
-                    return View("LoginRegister", new LoginRegisterViewModel() { LoginViewModel = model });
+                    return View("LoginRegister", model);
             }
         }
 
@@ -149,8 +167,34 @@ namespace OriginalShirts.Controllers
         {
             RegisterViewModel registerModel = model.RegisterViewModel;
 
-            var user = new ApplicationUser { UserName = registerModel.Name, Email = registerModel.Email };
-            var result = await UserManager.CreateAsync(user, registerModel.Password);
+            if (!ModelState.IsValid)
+            {
+                return View("LoginRegister", model);
+            }
+            else if (string.IsNullOrWhiteSpace(registerModel.RegisterEmail) ||
+                        string.IsNullOrWhiteSpace(registerModel.RegisterPassword) ||
+                        string.IsNullOrWhiteSpace(registerModel.RegisterName))
+            {
+                if (string.IsNullOrWhiteSpace(registerModel.RegisterEmail))
+                {
+                    ModelState.AddModelError("RegisterEmail", "Please, enter email.");
+                }
+
+                if (string.IsNullOrWhiteSpace(registerModel.RegisterPassword))
+                {
+                    ModelState.AddModelError("RegisterPassword", "Please, enter password.");
+                }
+
+                if (string.IsNullOrWhiteSpace(registerModel.RegisterName))
+                {
+                    ModelState.AddModelError("RegisterName", "Please, enter user name.");
+                }
+
+                return View("LoginRegister", model);
+            }
+
+            var user = new ApplicationUser { UserName = registerModel.RegisterName, Email = registerModel.RegisterEmail };
+            var result = await UserManager.CreateAsync(user, registerModel.RegisterPassword);
             if (result.Succeeded)
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -390,7 +434,7 @@ namespace OriginalShirts.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Shirt");
         }
 
         //
@@ -447,7 +491,7 @@ namespace OriginalShirts.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Shirt");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
