@@ -21,18 +21,43 @@ namespace OriginalShirts.Controllers
                                 .Set<Cart>()
                                 .Include("CartItems.Product")
                                 .Where(x => x.UserId == userId)
-                                .FirstOrDefault();
+                                .FirstOrDefault() ?? new Cart();
 
                 return View(cart);
             }
         }
 
+        public ActionResult Checkout()
+        {
+            return View();
+        }
 
+        public ActionResult RemoveCartItemt(int id)
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                Cart cart = context
+                                .Set<Cart>()
+                                .Include("CartItems")
+                                .Where(x => x.UserId == userId)
+                                .FirstOrDefault();
+
+                CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+                context.Set<CartItem>().Remove(item);
+
+                context.SaveChanges();
+
+                return Json(cart, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
         public ActionResult AddtoCart(int id, int quontity)
         {
             using (ApplicationContext context = new ApplicationContext())
             {
-                Shirt product = context.Set<Shirt>().Where(x => x.Id == id).First();
+                Product product = context.Set<Product>().Where(x => x.Id == id).First();
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 Cart cart = context
                                 .Set<Cart>()
@@ -60,16 +85,17 @@ namespace OriginalShirts.Controllers
                 }
 
                 context.SaveChanges();
-            }
 
-            return RedirectToAction("Index");
+                return Json(cart, JsonRequestBehavior.AllowGet);
+            }
         }
 
+        [HttpGet]
         public ActionResult RemoveFromCart(int id, int quontity)
         {
             using (ApplicationContext context = new ApplicationContext())
             {
-                Shirt product = context.Set<Shirt>().Where(x => x.Id == id).First();
+                Product product = context.Set<Product>().Where(x => x.Id == id).First();
                 Guid userId = Guid.Parse(User.Identity.GetUserId());
                 Cart cart = context
                                 .Set<Cart>()
@@ -91,9 +117,9 @@ namespace OriginalShirts.Controllers
                 }
 
                 context.SaveChanges();
-            }
 
-            return RedirectToAction("Index");
+                return Json(cart, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

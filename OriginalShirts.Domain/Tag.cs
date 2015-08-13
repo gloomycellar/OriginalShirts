@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OriginalShirts.Domain
@@ -7,7 +8,7 @@ namespace OriginalShirts.Domain
     {
         public Tag()
         {
-            Shirts = new HashSet<Shirt>();
+            Products = new HashSet<Product>();
             Groups = new HashSet<TagGroup>();
         }
 
@@ -17,10 +18,13 @@ namespace OriginalShirts.Domain
             Groups = groups;
         }
 
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
-        public ICollection<Shirt> Shirts { get; set; }
+        [JsonProperty(PropertyName = "products")]
+        public ICollection<Product> Products { get; set; }
 
+        [JsonProperty(PropertyName = "groups")]
         public ICollection<TagGroup> Groups { get; set; }
     }
 }

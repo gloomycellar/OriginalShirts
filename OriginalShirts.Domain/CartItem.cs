@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +13,16 @@ namespace OriginalShirts.Domain
         {
         }
 
-        public CartItem(Shirt product, int quontity)
+        public CartItem(Product product, int quontity)
         {
             Product = product;
             Quontity = quontity;
         }
 
+        [JsonProperty(PropertyName = "quontity")]
         public int Quontity { get; set; }
 
-        public Shirt Product { get; set; }
+        [JsonProperty(PropertyName = "product")]
+        public Product Product { get; set; }
     }
 }

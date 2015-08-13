@@ -116,7 +116,7 @@ namespace OriginalShirts.Dal.Migrations
 
             context.SaveChanges();
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition 1",
                 Price = 56,
@@ -129,7 +129,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition 2",
                 Price = 56,
@@ -142,7 +142,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition 3",
                 Price = 56,
@@ -155,7 +155,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition 4",
                 Price = 56,
@@ -168,7 +168,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -181,7 +181,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -194,7 +194,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -207,7 +207,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -220,7 +220,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
             //--
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -233,7 +233,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -246,7 +246,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -259,7 +259,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
             //--
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -272,7 +272,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -285,7 +285,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -298,7 +298,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
             //--
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -311,7 +311,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -324,7 +324,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,
@@ -337,7 +337,7 @@ namespace OriginalShirts.Dal.Migrations
                 }
             });
 
-            context.Set<Shirt>().Add(new Shirt()
+            context.Set<Product>().Add(new Product()
             {
                 Name = "Easy Polo Black Edition",
                 Price = 56,

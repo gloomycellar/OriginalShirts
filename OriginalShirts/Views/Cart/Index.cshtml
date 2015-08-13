@@ -12,7 +12,12 @@
                 <li class="active">Shopping Cart</li>
             </ol>
         </div>
-        <div class="table-responsive cart_info">
+
+        <div id="no-cart-items" style="@(Model.CartItems.Count > 0 ? "display:none" : "")" >
+            There's no items in your cart.
+        </div>
+
+        <div id="cart-items" class="table-responsive cart_info" style="@(Model.CartItems.Count == 0 ? "display:none" : "")">
             <table class="table table-condensed">
                 <thead>
                     <tr class="cart_menu">
@@ -27,7 +32,7 @@
                 <tbody>
                     @foreach (var item in Model.CartItems)
                     {
-                        <tr>
+                        <tr class="cart-item-@item.Id">
                             <td class="cart_product">
                                 <a href="">
                                     <img src="@item.Product.Image?w=110&h=110&mode=crop" alt="">
@@ -43,7 +48,7 @@
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
                                     <a class="cart_quantity_up" href="/cart/addtocart/?id=@item.Product.Id&quontity=1"> + </a>
-                                        <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quontity" autocomplete="off" size="2">
+                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quontity" autocomplete="off" size="2">
                                     <a class="cart_quantity_down" href="/cart/removefromcart/?id=@item.Product.Id&quontity=1"> - </a>
                                 </div>
                             </td>
@@ -51,7 +56,7 @@
                                 <p class="cart_total_price">$@(item.Quontity * item.Product.Price)</p>
                             </td>
                             <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+                                <a class="cart_quantity_delete" data-id="@item.Id"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                     }
@@ -155,9 +160,52 @@
                         <li>Total <span>$61</span></li>
                     </ul>
                     <a class="btn btn-default update" href="">Update</a>
-                    <a class="btn btn-default check_out" href="">Check Out</a>
+                    <a class="btn btn-default check_out" href="/cart/checkout">Check Out</a>
                 </div>
             </div>
         </div>
     </div>
 </section><!--/#do_action-->
+@section scripts{
+    <script>
+        (function ($) {
+            var cart = {
+                init: function () {
+                    $("#addtoCart").click(this.onAddToCart)
+
+                    $(".cart_quantity_delete").click(this.onRemoveCartItem)
+                },
+
+                onAddToCart: function () {
+                    var quontity = $("#quontity").val();
+                    var id = $("#productId").val();
+                    var uri = "/cart/addtocart/?id=" + id + "&quontity=" + quontity;
+                    $.get(uri).success(function (res) {
+
+                    }).fail(function (res) {
+
+                    })
+                },
+
+                onRemoveCartItem: function () {
+                    var id = $(".cart_quantity_delete").attr("data-id")
+                    var uri = "/cart/RemoveCartItemt/?id=" + id;
+                    $.get(uri).success(function (res) {
+                        if (res.CartItems.length > 0) {
+                            $(".cart-item-" + id).remove();
+                        }
+                        else {
+                            $("#no-cart-items").show()
+                            $("#cart-items").hide()
+                        }
+                       
+                    }).fail(function (res) {
+
+                    })
+                }
+            }
+
+            cart.init();
+        })(jQuery)
+    </script>
+}

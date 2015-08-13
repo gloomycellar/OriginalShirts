@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OriginalShirts.Domain
 { 
@@ -11,6 +12,7 @@ namespace OriginalShirts.Domain
             Name = name;
         }
 
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using OriginalShirts.Domain.Account;
+﻿using Newtonsoft.Json;
+using OriginalShirts.Domain.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,10 @@ namespace OriginalShirts.Domain
             CartItems = items;
         }
 
+        [JsonProperty(PropertyName ="userId")]
         public Guid UserId { get; set; }
 
+        [JsonProperty(PropertyName = "cartItems")]
         public ICollection<CartItem> CartItems { get; }
 
         //public void AddToCart(Shirt product, int quontity)

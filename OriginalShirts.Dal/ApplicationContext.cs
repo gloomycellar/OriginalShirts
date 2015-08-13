@@ -12,7 +12,7 @@ namespace OriginalShirts.Dal
             this.Configuration.LazyLoadingEnabled = false;
         }
 
-        public DbSet<Shirt> Shirts { get; set; }
+        public DbSet<Product> Shirts { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
         public DbSet<Tag> Tags{ get; set; }

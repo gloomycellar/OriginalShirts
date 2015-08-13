@@ -205,7 +205,7 @@ namespace OriginalShirts.Controllers
                 // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                return RedirectToAction("Index", "Shirt");
+                return RedirectToAction("Index", "Product");
             }
             //    AddErrors(result);
             //}
@@ -434,7 +434,7 @@ namespace OriginalShirts.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Shirt");
+            return RedirectToAction("Index", "Product");
         }
 
         //
@@ -491,7 +491,7 @@ namespace OriginalShirts.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Shirt");
+            return RedirectToAction("Index", "Product");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

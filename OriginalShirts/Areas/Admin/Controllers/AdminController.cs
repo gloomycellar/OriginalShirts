@@ -13,7 +13,7 @@ namespace OriginalShirts.Areas.Admin.Controllers
         {
             using (ApplicationContext context = new ApplicationContext())
             {
-                var shirts = context.Set<Shirt>().Select(x => new
+                var shirts = context.Set<Product>().Select(x => new
                 {
                     Id = x.Id,
                     Name = x.Name,
