@@ -125,7 +125,7 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <a href="/product/details/@shirt.Id" class="text-decoration: none;">
+                                        <a href="@Url.Action("Details", "Product", new { id = shirt.Id })" class="text-decoration: none;">
                                             <img src="@shirt.Image?h=255&w=255&mode=crop" alt="@shirt.Name" />
                                         </a>
                                         <h2>$@shirt.Price</h2>
@@ -154,18 +154,18 @@
                                 if (index == Model.CurrentPage)
                                 {
                                     <li class="active">
-                                        @Html.ActionLink(index.ToString(), "Index", new { tag = Model.TagName, page = index }, null)
+                                        @Html.ActionLink(index.ToString(), "Index", "Product", new { tag = Model.TagName, page = index }, null)
                                     </li>
                                 }
                                 else
                                 {
                                     <li>
-                                        @Html.ActionLink(index.ToString(), "Index", new { tag = Model.TagName, page = index }, null)
+                                        @Html.ActionLink(index.ToString(), "Index", "Product", new { tag = Model.TagName, page = index }, null)
                                     </li>
                                 }
                             }
 
-                            <li>@Html.ActionLink(">>", "Index", new { tag = Model.TagName, page = Model.PageCount }, null)</li>
+                            <li>@Html.ActionLink(">>", "Index", "Product", new { tag = Model.TagName, page = Model.PageCount }, null)</li>
                         </ul>
                     }
                     else

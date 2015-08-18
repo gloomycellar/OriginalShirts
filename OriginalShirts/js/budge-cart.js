@@ -1,6 +1,6 @@
 ﻿var BudgeCart = {
     reload: function () {
-        var url = "Cart/GetCartCount";
+        var url = "/Cart/GetCartCount";
         $.get(url).success(function (res) {
             if (res) {
                 $("#cart-budge").text(res);

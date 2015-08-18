@@ -34,7 +34,7 @@
                     {
                         <tr class="cart-item-@item.Id">
                             <td class="cart_product">
-                                <a href="@Url.Action("Details", "Product", new { id = item.Id })">
+                                <a href="@Url.Action("Details", "Product", new { id = item.Product.Id })">
                                     <img src="@item.Product.Image?w=110&h=110&mode=crop" alt="">
                                 </a>
                             </td>
