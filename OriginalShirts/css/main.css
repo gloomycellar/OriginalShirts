@@ -852,6 +852,12 @@ h2.title {
     margin-bottom: 30px;
 }
 
+    .product-image-wrapper:hover {
+        -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+        box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    }
+
 .single-products {
     position: relative;
 }
@@ -2504,11 +2510,15 @@ h2.title {
 }
 
 .cart-budge {
-    background-color: red;
+    background-color: #dc0d17;
     font-size: 11px;
     padding: 2px 3px;
     position: relative;
     top: -12px;
     right: -2px;
-    border-radius: 4px;
+    border-radius: 2px;
+    background-image: linear-gradient(#fa3c45, #dc0d17);
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .7);
 }
