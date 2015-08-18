@@ -27,6 +27,27 @@ namespace OriginalShirts.Controllers
             }
         }
 
+        public ActionResult GetCartCount()
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                Cart cart = context
+                                .Set<Cart>()
+                                .Include("CartItems")
+                                .Where(x => x.UserId == userId)
+                                .FirstOrDefault() ?? new Cart();
+
+                int result = 0;
+                foreach (CartItem item in cart.CartItems)
+                {
+                    result += item.Quontity;
+                }
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         public ActionResult Checkout()
         {
             return View();

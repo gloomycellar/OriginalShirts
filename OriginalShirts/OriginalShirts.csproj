@@ -357,6 +357,7 @@
     <Content Include="images\shop\product8.jpg" />
     <Content Include="images\shop\product9.jpg" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\budge-cart.js" />
     <Content Include="js\contact.js" />
     <Content Include="js\gmaps.js" />
     <Content Include="js\html5shiv.js" />

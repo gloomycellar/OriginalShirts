@@ -13,7 +13,7 @@
             </ol>
         </div>
 
-        <div id="no-cart-items" style="@(Model.CartItems.Count > 0 ? "display:none" : "")" >
+        <div id="no-cart-items" style="@(Model.CartItems.Count > 0 ? "display:none" : "")">
             There's no items in your cart.
         </div>
 
@@ -34,7 +34,7 @@
                     {
                         <tr class="cart-item-@item.Id">
                             <td class="cart_product">
-                                <a href="">
+                                <a href="@Url.Action("Details", "Product", new { id = item.Id })">
                                     <img src="@item.Product.Image?w=110&h=110&mode=crop" alt="">
                                 </a>
                             </td>
@@ -47,9 +47,9 @@
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href="/cart/addtocart/?id=@item.Product.Id&quontity=1"> + </a>
+                                    <a class="cart_quantity_up" data-id="@item.Id" data-product-id="@item.Product.Id"> + </a>
                                     <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quontity" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href="/cart/removefromcart/?id=@item.Product.Id&quontity=1"> - </a>
+                                    <a class="cart_quantity_down" data-id="@item.Id" data-product-id="@item.Product.Id"> - </a>
                                 </div>
                             </td>
                             <td class="cart_total">
@@ -60,31 +60,6 @@
                             </td>
                         </tr>
                     }
-                    @*<tr>
-                            <td class="cart_product">
-                                <a href=""><img src="/images/cart/one.png" alt=""></a>
-                            </td>
-                            <td class="cart_description">
-                                <h4><a href="">Colorblock Scuba</a></h4>
-                                <p>Web ID: 1089772</p>
-                            </td>
-                            <td class="cart_price">
-                                <p>$59</p>
-                            </td>
-                            <td class="cart_quantity">
-                                <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" href=""> + </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" href=""> - </a>
-                                </div>
-                            </td>
-                            <td class="cart_total">
-                                <p class="cart_total_price">$59</p>
-                            </td>
-                            <td class="cart_delete">
-                                <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
-                            </td>
-                        </tr>*@
                 </tbody>
             </table>
         </div>
@@ -169,26 +144,53 @@
 @section scripts{
     <script>
         (function ($) {
-            var cart = {
+            var Cart = {
                 init: function () {
-                    $("#addtoCart").click(this.onAddToCart)
+                    $(".cart_quantity_input").keypress(this.validate);
+                    $(".cart_quantity_delete").click(this.onRemoveCartItem);
 
-                    $(".cart_quantity_delete").click(this.onRemoveCartItem)
+                    $(".cart_quantity_up").click(this.onIncreaceCount)
+                    $(".cart_quantity_down").click(this.onDecreaceCount)
                 },
 
-                onAddToCart: function () {
-                    var quontity = $("#quontity").val();
-                    var id = $("#productId").val();
-                    var uri = "/cart/addtocart/?id=" + id + "&quontity=" + quontity;
+                onIncreaceCount: function (e) {
+                    var id = $(e.delegateTarget).attr("data-id");
+                    var productId = $(e.delegateTarget).attr("data-product-id");
+                    var uri = "/cart/addtocart/?id=" + productId + "&quontity=1";
                     $.get(uri).success(function (res) {
-
-                    }).fail(function (res) {
-
-                    })
+                        Cart.checkCartItemRow(id, res);
+                    });
                 },
 
-                onRemoveCartItem: function () {
-                    var id = $(".cart_quantity_delete").attr("data-id")
+                onDecreaceCount: function (e) {
+                    var id = $(e.delegateTarget).attr("data-id");
+                    var productId = $(e.delegateTarget).attr("data-product-id");
+                    var uri = "/cart/RemoveFromCart/?id=" + productId + "&quontity=1";
+                    $.get(uri).success(function (res) {
+                        Cart.checkCartItemRow(id, res);
+                    });
+                },
+
+                checkCartItemRow: function (id, cart) {
+                    var cartItem = $.grep(cart.CartItems, function (e) { return e.Id == id; })[0];
+
+                    if (cartItem && cartItem.Quontity > 0) {
+                        $(".cart-item-" + id + " .cart_quantity_input").val(cartItem.Quontity);
+                        var totalString = "$" + (cartItem.Quontity * cartItem.Product.Price) + ".00";
+                        $(".cart-item-" + id + " .cart_total_price").text(totalString);
+                    } else {
+                        $(".cart-item-" + id).remove();
+                        if (cart.CartItems.length == 0) {
+                            $("#no-cart-items").show()
+                            $("#cart-items").hide()
+                        }
+                    }
+
+                    BudgeCart.reload();
+                },
+
+                onRemoveCartItem: function (e) {
+                    var id = $(e.delegateTarget).attr("data-id");
                     var uri = "/cart/RemoveCartItemt/?id=" + id;
                     $.get(uri).success(function (res) {
                         if (res.CartItems.length > 0) {
@@ -198,14 +200,24 @@
                             $("#no-cart-items").show()
                             $("#cart-items").hide()
                         }
-                       
-                    }).fail(function (res) {
 
+                        BudgeCart.reload();
                     })
+                },
+
+                validate: function (evt) {
+                    var theEvent = evt || window.event;
+                    var key = theEvent.keyCode || theEvent.which;
+                    key = String.fromCharCode(key);
+                    var regex = /[0-9]|\./;
+                    if (!regex.test(key)) {
+                        theEvent.returnValue = false;
+                        if (theEvent.preventDefault) theEvent.preventDefault();
+                    }
                 }
             }
 
-            cart.init();
+            Cart.init();
         })(jQuery)
     </script>
 }
