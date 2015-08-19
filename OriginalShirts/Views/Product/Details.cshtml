@@ -274,7 +274,7 @@
                     var id = $("#productId").val();
                     var uri = "/cart/addtocart/?id=" + id + "&quontity=" + quontity;
                     $.get(uri).success(function (res) {
-
+                        BudgeCart.reload();
                     }).fail(function (res) {
 
                     })
