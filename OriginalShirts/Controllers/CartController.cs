@@ -73,6 +73,34 @@ namespace OriginalShirts.Controllers
             }
         }
 
+        public ActionResult SetQuontity(int id, int quontity)
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+                Cart cart = context
+                                .Set<Cart>()
+                                .Include("CartItems.Product")
+                                .Where(x => x.UserId == userId)
+                                .First();
+
+                CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+
+                if (quontity <= 0)
+                {
+                    context.Set<CartItem>().Remove(item);
+                }
+                else
+                {
+                    item.Quontity = quontity;
+                }
+
+                context.SaveChanges();
+
+                return Json(cart, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpGet]
         public ActionResult AddtoCart(int id, int quontity)
         {
