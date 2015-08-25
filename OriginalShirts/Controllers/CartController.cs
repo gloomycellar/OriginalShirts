@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Dynamic;
+using System.Net.Mail;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace OriginalShirts.Controllers
 {
@@ -50,7 +54,50 @@ namespace OriginalShirts.Controllers
 
         public ActionResult Checkout()
         {
-            return View();
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                Guid userId = Guid.Parse(User.Identity.GetUserId());
+
+                Cart cart = context
+                                .Set<Cart>()
+                                .Include("CartItems.Product")
+                                .Where(x => x.UserId == userId)
+                                .First();
+
+                UserDetail userDetails = context
+                                .Set<UserDetail>()
+                                .Where(x => x.UserId == userId)
+                                .FirstOrDefault() ?? new UserDetail();
+
+                dynamic result = new ExpandoObject();
+                result.Cart = cart;
+                result.UserDetails = userDetails;
+
+                return View(result);
+            }
+        }
+        
+        public async Task<ActionResult> SubmitOrder()
+        {
+            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            var message = new MailMessage();
+            message.To.Add(new MailAddress("timursayfullin@gmail.com"));  // replace with valid value 
+            message.From = new MailAddress("timursayfullin@gmail.com");  // replace with valid value
+            message.Subject = "Your email subject";
+            message.Body = string.Format(body, "Tim", "timursayfullin@gmail.com", "test message");
+            message.IsBodyHtml = true;
+
+            using (var smtp = new SmtpClient())
+            {
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = new NetworkCredential("timursayfullin@gmail.com", "general673");
+                smtp.Host = "smtp.gmail.com";
+                smtp.Port = 587;
+                smtp.EnableSsl = true;
+                await smtp.SendMailAsync(message);
+
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult RemoveCartItemt(int id)

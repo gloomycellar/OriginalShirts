@@ -20,6 +20,8 @@ namespace OriginalShirts.Dal
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
 
+        public DbSet<UserDetail> UserDetails { get; set; }
+
         public static ApplicationContext Create()
         {
             return new ApplicationContext();

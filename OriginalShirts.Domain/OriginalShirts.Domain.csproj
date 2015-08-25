@@ -96,6 +96,7 @@
     <Compile Include="Size.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="TagGroup.cs" />
+    <Compile Include="UserDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
