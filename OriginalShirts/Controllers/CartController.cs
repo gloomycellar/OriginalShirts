@@ -90,7 +90,7 @@ namespace OriginalShirts.Controllers
             using (var smtp = new SmtpClient())
             {
                 smtp.UseDefaultCredentials = true;
-                smtp.Credentials = new NetworkCredential("timursayfullin@gmail.com", "general673");
+                smtp.Credentials = new NetworkCredential("", "");
                 smtp.Host = "smtp.gmail.com";
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
