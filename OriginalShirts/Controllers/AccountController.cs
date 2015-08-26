@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using OriginalShirts.Models;
-using OriginalShirts.Domain.Account;
 using OriginalShirts.Dal;
 using OriginalShirts.Domain;
 using System;

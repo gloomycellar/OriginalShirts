@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
-using OriginalShirts.Domain;
-using OriginalShirts.Domain.Account;
+﻿using OriginalShirts.Domain;
 using System.Data.Entity;
 
 namespace OriginalShirts.Dal
 {
-    public class ApplicationContext: IdentityDbContext<ApplicationUser>
+    public class ApplicationContext: DbContext
     {
-        public ApplicationContext(): base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationContext(): base("DefaultConnection")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -19,8 +17,9 @@ namespace OriginalShirts.Dal
         public DbSet<TagGroup> TagsGroups { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
-
         public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<NpDepartment> NpDepartments { get; set; }
+
 
         public static ApplicationContext Create()
         {
