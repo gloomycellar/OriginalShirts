@@ -21,32 +21,21 @@
                             <form>
                                 <input type="text" placeholder="Name *" required value="@Model.UserDetails.Name">
                                 <input type="text" placeholder="Phone *" required>
-                                @*<select>
-                                        <option>-- Phones --</option>
-                                    </select>*@
-                                <input type="text" placeholder="Address *" required>
-                                @*<select>
-                                        <option>-- Addresses --</option>
-                                    </select>*@
+                                
+                                <input type="text" id="np-cities" placeholder="City *" required>
+                                <span id="np-city-toogle" class="input-autocomplete" style="position: absolute;top: 101px; left: 433px;">
+                                    <span></span>
+                                </span>
+                                <div id="np-cities-menu-container" style="position:absolute; width: 500px;"></div>
+
+                                <input type="text" id="np-departments" placeholder="Department *" required>
+                                <span id="np-departments-toogle" class="input-autocomplete" style="position: absolute;top: 151px; left: 433px;">
+                                    <span></span>
+                                </span>
+                                <div id="np-departments-menu-container" style="position:absolute; width: 500px;"></div>
                             </form>
                             <a id="submit-order" class="btn btn-primary">Submit Order</a>
                         </div>
-                        @*<div class="form-two">
-                                <form>
-                                    <input type="text" placeholder="Zip / Postal Code *">
-                                    <select>
-                                        <option>-- Country --</option>
-                                        <option>United States</option>
-                                        <option>Bangladesh</option>
-                                        <option>UK</option>
-                                        <option>India</option>
-                                        <option>Pakistan</option>
-                                        <option>Ucrane</option>
-                                        <option>Canada</option>
-                                        <option>Dubai</option>
-                                    </select>
-                                </form>
-                            </div>*@
                     </div>
                 </div>
             </div>
@@ -61,7 +50,69 @@
     <script>
         var Checkout = {
             init: function () {
+                var that = this;
                 $("#submit-order").click(this.submitOrder);
+
+                var citiesWasOpen = false;
+                var citiesUrl = "@Url.Action("GetNpCities", "Cart")";
+                $.get(citiesUrl).success(function (res) {
+                    $("#np-cities").autocomplete({
+                        source: res,
+                        minLength: 0,
+                        appendTo: '#np-cities-menu-container',
+                        select: that.onCityAutocompleteSelect
+                    });
+
+                    $("#np-city-toogle").mousedown(function () {
+                        citiesWasOpen = $("#np-cities").autocomplete("widget").is(":visible");
+                    });
+
+                    $("#np-city-toogle").click(function () {
+                        var input = $("#np-cities");
+                        if (!citiesWasOpen) {
+                            input.trigger("focus");
+                            input.autocomplete("search", $("#np-cities").val());
+                        }
+                    })
+                });
+
+                var departmentsWasOpen = false;
+                $("#np-departments").autocomplete({
+                    source: [],
+                    minLength: 0,
+                    appendTo: '#np-departments-menu-container',
+                    select: this.onDepartmentAutocompleteSelect
+                });
+
+                $("#np-departments-toogle").mousedown(function () {
+                    departmentsWasOpen = $("#np-departments").autocomplete("widget").is(":visible");
+                });
+
+                $("#np-departments-toogle").click(function () {
+                    var input = $("#np-departments");
+                    if (!departmentsWasOpen) {
+                        input.trigger("focus");
+                        input.autocomplete("search", $("#np-departments").val());
+                    }
+                })
+            },
+
+            onCityAutocompleteSelect: function (e, ui) {
+                var that = this;
+                var value = ui.item.value;
+
+                if (value) {
+                    var url = "@Url.Action("GetNpDepartments", "Cart")" + "?name=" + value;
+                    $.get(url).success(function (res) {
+                        $("#np-departments").autocomplete("option", { source: res });
+                    });
+                } else {
+
+                }
+            },
+
+            onDepartmentAutocompleteSelect: function () {
+    
             },
 
             submitOrder: function () {
@@ -69,7 +120,7 @@
                 $.get(url).success(function (res) {
                     console.log(res);
                 })
-            }
+            },
         };
 
         $(function () {

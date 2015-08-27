@@ -1902,12 +1902,13 @@ h2.title {
 
 .form-two, .form-one {
     float: left;
-    width: 47%;
+    /*width: 47%;*/
 }
 
 
     .shopper-info > form > input,
     .form-two > form > select,
+    .form-one > form > select,
     .form-two > form > input,
     .form-one > form > input {
         background: #F0F0E9;
@@ -2529,4 +2530,93 @@ h2.title {
     top: 2px;
     left: 1px;
     font-size: x-small;
+}
+
+
+/*jquery-ui*/
+.ui-front {
+    z-index: 100;
+}
+
+.ui-widget {
+    /*font-family: Verdana,Arial,sans-serif;
+    font-size: 1.1em;*/
+    font-weight: 300;
+}
+
+.ui-widget-content {
+    border: 1px solid #aaaaaa;
+    background: #ffffff url("/Content/themes/base/images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
+    color: #222222;
+}
+
+.ui-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    outline: none;
+}
+
+.ui-helper-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: default;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+}
+
+.input-autocomplete {
+    width: 38px;
+    height: 38px;
+    display: block;
+    background-color: rgba(179, 179, 179, 0.56);
+    cursor: pointer;
+}
+
+    .input-autocomplete span {
+        background-image: url("/Content/themes/base/images/ui-icons_222222_256x240.png") /*{iconsError}*/;
+        background-position: -64px -16px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        position: relative;
+        top: 11px;
+        left: 11px;
+    }
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    border: 1px solid #999999;
+    background: #dadada url("/Content/themes/base/images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x;
+    font-weight: 300;
+    color: #212121;
+}
+
+.ui-menu .ui-menu-item {
+    position: relative;
+    margin: 0;
+    padding: 3px 1em 3px .4em;
+    cursor: pointer;
+    min-height: 0;
+    /* support: IE7; */
+    /* support: IE10, see #8844; */
+    list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+
+.ui-menu .ui-state-focus, .ui-menu .ui-state-active {
+    margin: -1px;
 }
