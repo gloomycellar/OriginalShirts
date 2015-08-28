@@ -54,7 +54,7 @@
                 $("#submit-order").click(this.submitOrder);
 
                 var citiesWasOpen = false;
-                var citiesUrl = "@Url.Action("GetNpCities", "Cart")";
+                var citiesUrl = "@Url.Action("GetNpCities", "Checkout")";
                 $.get(citiesUrl).success(function (res) {
                     $("#np-cities").autocomplete({
                         source: res,
@@ -102,7 +102,7 @@
                 var value = ui.item.value;
 
                 if (value) {
-                    var url = "@Url.Action("GetNpDepartments", "Cart")" + "?name=" + value;
+                    var url = "@Url.Action("GetNpDepartments", "Checkout")" + "?name=" + value;
                     $.get(url).success(function (res) {
                         $("#np-departments").autocomplete("option", { source: res });
                     });
@@ -116,7 +116,7 @@
             },
 
             submitOrder: function () {
-                var url = "@Url.Action("SubmitOrder", "Cart")"
+                var url = "@Url.Action("SubmitOrder", "Checkout")"
                 $.get(url).success(function (res) {
                     console.log(res);
                 })

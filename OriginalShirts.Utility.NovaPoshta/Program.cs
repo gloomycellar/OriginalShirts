@@ -17,10 +17,10 @@ namespace OriginalShirts.Utility.NovaPoshta
     {
         static void Main(string[] args)
         {
-            //Task<string> t = GeteRawString();
-            //t.Wait();
-            //DeportmentResponce departments = JsonConvert.DeserializeObject<DeportmentResponce>(t.Result);
-            //File.WriteAllText("nova_poshta.json", t.Result);
+            Task<string> t = GeteRawString();
+            t.Wait();
+
+            File.WriteAllText("nova_poshta.json", t.Result);
 
             string json = File.ReadAllText("nova_poshta.json");
             List<NpDepartment> departments = ConvertToObjects(json);
