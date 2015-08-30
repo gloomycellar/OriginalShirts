@@ -202,7 +202,7 @@
 
                 onRemoveCartItem: function (e) {
                     var id = $(e.delegateTarget).attr("data-id");
-                    var uri = "/cart/RemoveCartItemt/?id=" + id;
+                    var uri = "/cart/RemoveCartItem/?id=" + id;
                     $.get(uri).success(function (res) {
                         if (res.CartItems.length > 0) {
                             $(".cart-item-" + id).remove();

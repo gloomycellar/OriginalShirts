@@ -10,159 +10,194 @@ namespace OriginalShirts.Controllers
 {
     public class CartController : Controller
     {
-        // GET: Cart
-        public ActionResult Index()
+        public Guid? UserId
+        {
+            get
+            {
+                string id = User.Identity.GetUserId();
+                return string.IsNullOrEmpty(id) ? null : (Guid?)Guid.Parse(User.Identity.GetUserId());
+            }
+        }
+
+        public Cart UserCart
+        {
+            get
+            {
+                if (UserId.HasValue)
+                {
+                    using (ApplicationContext context = new ApplicationContext())
+                    {
+                        Cart cart = context
+                                        .Set<Cart>()
+                                        .Include("CartItems.Product")
+                                        .Where(x => x.UserId == UserId.Value)
+                                        .FirstOrDefault();
+
+                        if (null == cart)
+                        {
+                            context.Set<Cart>().Add(new Cart(UserId.Value));
+                            context.SaveChanges();
+
+                            return context
+                                        .Set<Cart>()
+                                        .Include("CartItems.Product")
+                                        .Where(x => x.UserId == UserId.Value)
+                                        .First();
+                        }
+
+                        return cart;
+                    }
+                }
+
+                if (null == Session["Cart"])
+                {
+                    Cart cart = new Cart();
+                    Session["Cart"] = cart;
+                    return cart;
+                }
+
+                return (Cart)Session["Cart"];
+            }
+        }
+
+        private void UpdateDbCart(Action<Cart, ApplicationContext> action)
         {
             using (ApplicationContext context = new ApplicationContext())
             {
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
                 Cart cart = context
                                 .Set<Cart>()
-                                .Include("CartItems.Product")
-                                .Where(x => x.UserId == userId)
-                                .FirstOrDefault() ?? new Cart();
-
-                return View(cart);
+                                .Include("CartItems")
+                                .Where(x => x.UserId == UserId)
+                                .First();
+                action(cart, context);
+                context.SaveChanges();
             }
+        }
+
+        public ActionResult Index()
+        {
+            return View(UserCart);
         }
 
         public ActionResult GetCartCount()
         {
-            using (ApplicationContext context = new ApplicationContext())
+            int result = 0;
+            foreach (CartItem item in UserCart.CartItems)
             {
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems")
-                                .Where(x => x.UserId == userId)
-                                .FirstOrDefault() ?? new Cart();
-
-                int result = 0;
-                foreach (CartItem item in cart.CartItems)
-                {
-                    result += item.Quontity;
-                }
-
-                return Json(result, JsonRequestBehavior.AllowGet);
+                result += item.Quontity;
             }
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
-        public ActionResult RemoveCartItemt(int id)
+
+        public ActionResult RemoveCartItem(int id)
         {
-            using (ApplicationContext context = new ApplicationContext())
+            if (UserId.HasValue)
             {
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems")
-                                .Where(x => x.UserId == userId)
-                                .FirstOrDefault();
-
-                CartItem item = cart.CartItems.Where(x => x.Id == id).First();
-                context.Set<CartItem>().Remove(item);
-
-                context.SaveChanges();
-
-                return Json(cart, JsonRequestBehavior.AllowGet);
+                UpdateDbCart((cart, context) =>
+                {
+                    CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+                    context.Set<CartItem>().Remove(item);
+                });
             }
+            else
+            {
+                CartItem item = UserCart.CartItems.Where(x => x.Id == id).First();
+                UserCart.CartItems.Remove(item);
+            }
+
+            return Json(UserCart, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult SetQuontity(int id, int quontity)
         {
-            using (ApplicationContext context = new ApplicationContext())
+            if (UserId.HasValue)
             {
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems.Product")
-                                .Where(x => x.UserId == userId)
-                                .First();
-
-                CartItem item = cart.CartItems.Where(x => x.Id == id).First();
-
-                if (quontity <= 0)
+                UpdateDbCart((cart, context) =>
                 {
-                    context.Set<CartItem>().Remove(item);
-                }
-                else
-                {
-                    item.Quontity = quontity;
-                }
-
-                context.SaveChanges();
-
-                return Json(cart, JsonRequestBehavior.AllowGet);
+                    CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+                    if (0 >= quontity)
+                        context.Set<CartItem>().Remove(item);
+                    else
+                        item.Quontity = quontity;
+                });
             }
+            else
+            {
+                CartItem item = UserCart.CartItems.Where(x => x.Id == id).First();
+                if (0 >= quontity)
+                    UserCart.CartItems.Remove(item);
+                else
+                    item.Quontity = quontity;
+            }
+
+            return Json(UserCart, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult AddtoCart(int id, int quontity)
+        public ActionResult AddToCart(int id, int quontity)
         {
-            using (ApplicationContext context = new ApplicationContext())
+            if (UserId.HasValue)
             {
-                Product product = context.Set<Product>().Where(x => x.Id == id).First();
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems.Product")
-                                .Where(x => x.UserId == userId)
-                                .FirstOrDefault();
-
-                if (null == cart)
+                UpdateDbCart((cart, context) =>
                 {
-                    List<CartItem> items = new List<CartItem> { new CartItem(product, quontity) };
-                    cart = new Cart(userId, items);
-                    context.Set<Cart>().Add(cart);
-                }
-                else
-                {
+                    Product product = context.Set<Product>().Where(x => x.Id == id).First();
                     CartItem item = cart.CartItems.Where(x => x.Product.Id == product.Id).FirstOrDefault();
                     if (null == item)
-                    {
                         cart.CartItems.Add(new CartItem(product, quontity));
-                    }
                     else
-                    {
                         item.Quontity += quontity;
-                    }
+                });
+            }
+            else
+            {
+                Product product;
+                using (ApplicationContext context = new ApplicationContext())
+                {
+                    product = context.Set<Product>().Where(x => x.Id == id).First();
                 }
 
-                context.SaveChanges();
-
-                return Json(cart, JsonRequestBehavior.AllowGet);
+                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == product.Id).FirstOrDefault();
+                if (null == item)
+                    UserCart.CartItems.Add(new CartItem(product, quontity));
+                else
+                    item.Quontity += quontity;
             }
+
+            return Json(UserCart, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult RemoveFromCart(int id, int quontity)
         {
-            using (ApplicationContext context = new ApplicationContext())
+            if (UserId.HasValue)
             {
-                Product product = context.Set<Product>().Where(x => x.Id == id).First();
-                Guid userId = Guid.Parse(User.Identity.GetUserId());
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems.Product")
-                                .Where(x => x.UserId == userId)
-                                .FirstOrDefault();
-
-                CartItem item = cart.CartItems.Where(x => x.Product.Name == product.Name).FirstOrDefault();
+                UpdateDbCart((cart, context) =>
+                {
+                    CartItem item = cart.CartItems.Where(x => x.Product.Id == id).FirstOrDefault();
+                    if (null != item)
+                    {
+                        if (0 >= (item.Quontity - quontity))
+                            context.Set<CartItem>().Remove(item);
+                        else
+                            item.Quontity -= quontity;
+                    }
+                });
+            }
+            else
+            {
+                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == id).FirstOrDefault();
                 if (null != item)
                 {
                     if (0 >= (item.Quontity - quontity))
-                    {
-                        context.Set<CartItem>().Remove(item);
-                    }
+                        UserCart.CartItems.Remove(item);
                     else
-                    {
                         item.Quontity -= quontity;
-                    };
                 }
 
-                context.SaveChanges();
-
-                return Json(cart, JsonRequestBehavior.AllowGet);
             }
+
+            return Json(UserCart, JsonRequestBehavior.AllowGet);
         }
     }
 }

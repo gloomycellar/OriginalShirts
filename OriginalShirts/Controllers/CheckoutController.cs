@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using OriginalShirts.Dal;
 using OriginalShirts.Domain;
 using System;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace OriginalShirts.Controllers
 {
+    [Authorize]
     public class CheckoutController : Controller
     {
         public ActionResult Index()
@@ -65,34 +67,69 @@ namespace OriginalShirts.Controllers
 
             using (ApplicationContext context = new ApplicationContext())
             {
-                List<string> addresses = context
+                List<NpDepartment> departments = context
                                .Set<NpDepartment>()
                                .Where(x => x.CityRu == name)
-                               .Select(d => d.AddressRu)
                                .ToList();
 
-                return Json(addresses, JsonRequestBehavior.AllowGet);
+                return Json(departments, JsonRequestBehavior.AllowGet);
             }
         }
 
-        public async Task<ActionResult> SubmitOrder()
+        public class SubmitViewModel
         {
-            var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+            [JsonProperty(PropertyName = "npDepartmentId")]
+            public int NpDepartmentId { get; set; }
+            [JsonProperty(PropertyName = "name")]
+            public string Name { get; set; }
+            [JsonProperty(PropertyName = "phone")]
+            public string Phone { get; set; }
+        }
+
+        public async Task<ActionResult> SubmitOrder(SubmitViewModel model)
+        {
+            NpDepartment dep = null;
+
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                dep = context.Set<NpDepartment>().Where(x => x.Id == model.NpDepartmentId).First();
+            }
+
+            var body = "<p>" +
+                            "New Order Submitted" +
+                       "</p>" +
+                       "<table>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td>Name:</td><td>{0}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td>Phone:</td><td>{1}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td>City:</td><td>{2}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td>Nova Poshta Address:</td><td>{3}</td>" +
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>";
+
             var message = new MailMessage();
             message.To.Add(new MailAddress("timursayfullin@gmail.com"));  // replace with valid value 
             message.From = new MailAddress("timursayfullin@gmail.com");  // replace with valid value
-            message.Subject = "Your email subject";
-            message.Body = string.Format(body, "Tim", "timursayfullin@gmail.com", "test message");
+            message.Subject = "New Order Submitted";
+            message.Body = string.Format(body, model.Name, model.Phone, dep.CityRu, dep.AddressRu);
             message.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())
             {
-                smtp.UseDefaultCredentials = true;
-                smtp.Credentials = new NetworkCredential("", "");
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                await smtp.SendMailAsync(message);
+                //smtp.UseDefaultCredentials = true;
+                //smtp.Credentials = new NetworkCredential("", "");
+                //smtp.Host = "smtp.gmail.com";
+                //smtp.Port = 587;
+                //smtp.EnableSsl = true;
+                //await smtp.SendMailAsync(message);
 
                 return Json(true, JsonRequestBehavior.AllowGet);
             }

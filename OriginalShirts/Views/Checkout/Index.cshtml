@@ -19,9 +19,9 @@
                         @*<p>Bill To</p>*@
                         <div class="form-one">
                             <form>
-                                <input type="text" placeholder="Name *" required value="@Model.UserDetails.Name">
-                                <input type="text" placeholder="Phone *" required>
-                                
+                                <input type="text" id="user-name" placeholder="Name *" required value="@Model.UserDetails.Name">
+                                <input type="text" id="user-phone" placeholder="Phone *" required>
+
                                 <input type="text" id="np-cities" placeholder="City *" required>
                                 <span id="np-city-toogle" class="input-autocomplete" style="position: absolute;top: 101px; left: 433px;">
                                     <span></span>
@@ -33,6 +33,7 @@
                                     <span></span>
                                 </span>
                                 <div id="np-departments-menu-container" style="position:absolute; width: 500px;"></div>
+                                <input type="hidden" id="np-department-id" />
                             </form>
                             <a id="submit-order" class="btn btn-primary">Submit Order</a>
                         </div>
@@ -104,20 +105,37 @@
                 if (value) {
                     var url = "@Url.Action("GetNpDepartments", "Checkout")" + "?name=" + value;
                     $.get(url).success(function (res) {
-                        $("#np-departments").autocomplete("option", { source: res });
+                        $("#np-departments").autocomplete("option", {
+                            source: function (request, response) {
+                                response($.map(res, function (item) {
+                                    return {
+                                        label: item.AddressRu,
+                                        value: item.AddressRu,
+                                        realValue: item.Id
+                                    };
+                                }));
+                            }
+                        });
                     });
                 } else {
 
                 }
             },
 
-            onDepartmentAutocompleteSelect: function () {
-    
+            onDepartmentAutocompleteSelect: function (e, ui) {
+                $("#np-department-id").val(ui.item.realValue);
             },
 
             submitOrder: function () {
                 var url = "@Url.Action("SubmitOrder", "Checkout")"
-                $.get(url).success(function (res) {
+
+                var params = {
+                    name: $("#user-name").val(),
+                    phone: $("#user-phone").val(),
+                    npDepartmentId: $("#np-department-id").val()
+                };
+
+                $.get(url, params).success(function (res) {
                     console.log(res);
                 })
             },
