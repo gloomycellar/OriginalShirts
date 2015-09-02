@@ -8,72 +8,8 @@ using System.Web.Mvc;
 
 namespace OriginalShirts.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
-        public Guid? UserId
-        {
-            get
-            {
-                string id = User.Identity.GetUserId();
-                return string.IsNullOrEmpty(id) ? null : (Guid?)Guid.Parse(User.Identity.GetUserId());
-            }
-        }
-
-        public Cart UserCart
-        {
-            get
-            {
-                if (UserId.HasValue)
-                {
-                    using (ApplicationContext context = new ApplicationContext())
-                    {
-                        Cart cart = context
-                                        .Set<Cart>()
-                                        .Include("CartItems.Product")
-                                        .Where(x => x.UserId == UserId.Value)
-                                        .FirstOrDefault();
-
-                        if (null == cart)
-                        {
-                            context.Set<Cart>().Add(new Cart(UserId.Value));
-                            context.SaveChanges();
-
-                            return context
-                                        .Set<Cart>()
-                                        .Include("CartItems.Product")
-                                        .Where(x => x.UserId == UserId.Value)
-                                        .First();
-                        }
-
-                        return cart;
-                    }
-                }
-
-                if (null == Session["Cart"])
-                {
-                    Cart cart = new Cart();
-                    Session["Cart"] = cart;
-                    return cart;
-                }
-
-                return (Cart)Session["Cart"];
-            }
-        }
-
-        private void UpdateDbCart(Action<Cart, ApplicationContext> action)
-        {
-            using (ApplicationContext context = new ApplicationContext())
-            {
-                Cart cart = context
-                                .Set<Cart>()
-                                .Include("CartItems")
-                                .Where(x => x.UserId == UserId)
-                                .First();
-                action(cart, context);
-                context.SaveChanges();
-            }
-        }
-
         public ActionResult Index()
         {
             return View(UserCart);

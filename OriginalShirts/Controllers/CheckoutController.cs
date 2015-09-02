@@ -14,7 +14,7 @@ using System.Web.Mvc;
 namespace OriginalShirts.Controllers
 {
     [Authorize]
-    public class CheckoutController : Controller
+    public class CheckoutController : BaseController
     {
         public ActionResult Index()
         {

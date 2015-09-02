@@ -13,7 +13,7 @@ using System;
 namespace OriginalShirts.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -97,7 +97,30 @@ namespace OriginalShirts.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    {
+                        if (null != Session["Cart"])
+                        {
+                            Guid userId = Guid.Parse(UserManager.FindByEmail(loginModel.LoginEmail).Id);
+                            Cart sessionCart = (Cart)Session["Cart"];
+
+                            UpdateDbCart((cart, context) =>
+                            {
+                                foreach (CartItem item in sessionCart.CartItems)
+                                {
+                                    CartItem savedItem = cart.CartItems.Where(x => x.Product.Id == item.Product.Id).FirstOrDefault();
+                                    if (null == savedItem)
+                                        cart.CartItems.Add(new CartItem(item.Product, item.Quontity));
+                                    else
+                                        savedItem.Quontity += item.Quontity;
+                                }
+                            }, userId);
+
+                            Session["Cart"] = null;
+                        }
+
+
+                        return RedirectToLocal(returnUrl);
+                    }
                 //case SignInStatus.LockedOut:
                 //    return View("Lockout");
                 //case SignInStatus.RequiresVerification:
@@ -108,7 +131,7 @@ namespace OriginalShirts.Controllers
                     return View("LoginRegister", model);
             }
         }
-
+        
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -201,14 +224,47 @@ namespace OriginalShirts.Controllers
             {
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
+                ApplicationUser addedUser = UserManager.FindByEmail(user.Email);
+                Guid userId = Guid.Parse(addedUser.Id);
+
                 using (ApplicationContext context = new ApplicationContext())
-                {
-                   ApplicationUser addedUser = UserManager.FindByEmail(user.Email);
-                   UserDetail detail = new UserDetail();
-                    detail.UserId = Guid.Parse(addedUser.Id);
+                {   
+                    UserDetail detail = new UserDetail();
+                    detail.UserId = userId;
                     detail.Name = addedUser.UserName;
                     context.Set<UserDetail>().Add(detail);
+
+                    Cart cart = context
+                                .Set<Cart>()
+                                .Include("CartItems.Product")
+                                .Where(x => x.UserId == userId)
+                                .FirstOrDefault();
+
+                    if (null == cart)
+                    {
+                        context.Set<Cart>().Add(new Cart(userId));
+                    }
+
                     context.SaveChanges();
+                }
+
+                if (null != Session["Cart"])
+                {
+                    Cart sessionCart = (Cart)Session["Cart"];
+
+                    UpdateDbCart((cart, context) =>
+                    {
+                        foreach (CartItem item in sessionCart.CartItems)
+                        {
+                            CartItem savedItem = cart.CartItems.Where(x => x.Product.Id == item.Product.Id).FirstOrDefault();
+                            if (null == savedItem)
+                                cart.CartItems.Add(new CartItem(item.Product, item.Quontity));
+                            else
+                                savedItem.Quontity += item.Quontity;
+                        }
+                    }, userId);
+
+                    Session["Cart"] = null;
                 }
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -505,7 +561,7 @@ namespace OriginalShirts.Controllers
             }
             return RedirectToAction("Index", "Product");
         }
-
+        
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)

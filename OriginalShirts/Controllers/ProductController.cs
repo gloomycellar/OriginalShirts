@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace OriginalShirts.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         public ActionResult Index(string tag = null, int page = 1)
         {
