@@ -96,13 +96,13 @@ namespace OriginalShirts.Controllers
             {
                 UpdateDbCart((cart, context) =>
                 {
-                    CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+                    CartItem item = cart.CartItems.Where(x => x.Product.Id == id).First();
                     context.Set<CartItem>().Remove(item);
                 });
             }
             else
             {
-                CartItem item = UserCart.CartItems.Where(x => x.Id == id).First();
+                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == id).First();
                 UserCart.CartItems.Remove(item);
             }
 
@@ -115,7 +115,7 @@ namespace OriginalShirts.Controllers
             {
                 UpdateDbCart((cart, context) =>
                 {
-                    CartItem item = cart.CartItems.Where(x => x.Id == id).First();
+                    CartItem item = cart.CartItems.Where(x => x.Product.Id == id).First();
                     if (0 >= quontity)
                         context.Set<CartItem>().Remove(item);
                     else
@@ -124,7 +124,7 @@ namespace OriginalShirts.Controllers
             }
             else
             {
-                CartItem item = UserCart.CartItems.Where(x => x.Id == id).First();
+                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == id).First();
                 if (0 >= quontity)
                     UserCart.CartItems.Remove(item);
                 else
@@ -142,7 +142,7 @@ namespace OriginalShirts.Controllers
                 UpdateDbCart((cart, context) =>
                 {
                     Product product = context.Set<Product>().Where(x => x.Id == id).First();
-                    CartItem item = cart.CartItems.Where(x => x.Product.Id == product.Id).FirstOrDefault();
+                    CartItem item = cart.CartItems.Where(x => x.Product.Id == id).FirstOrDefault();
                     if (null == item)
                         cart.CartItems.Add(new CartItem(product, quontity));
                     else
@@ -157,7 +157,7 @@ namespace OriginalShirts.Controllers
                     product = context.Set<Product>().Where(x => x.Id == id).First();
                 }
 
-                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == product.Id).FirstOrDefault();
+                CartItem item = UserCart.CartItems.Where(x => x.Product.Id == id).FirstOrDefault();
                 if (null == item)
                     UserCart.CartItems.Add(new CartItem(product, quontity));
                 else

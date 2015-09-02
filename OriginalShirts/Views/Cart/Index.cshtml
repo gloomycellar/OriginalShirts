@@ -32,7 +32,7 @@
                 <tbody>
                     @foreach (var item in Model.CartItems)
                     {
-                        <tr class="cart-item-@item.Id">
+                        <tr class="cart-item-@item.Product.Id">
                             <td class="cart_product">
                                 <a href="@Url.Action("Details", "Product", new { id = item.Product.Id })">
                                     <img src="@item.Product.Image?w=110&h=110&mode=crop" alt="">
@@ -47,16 +47,16 @@
                             </td>
                             <td class="cart_quantity">
                                 <div class="cart_quantity_button">
-                                    <a class="cart_quantity_up" data-id="@item.Id" data-product-id="@item.Product.Id"><i class="fa fa-plus icon-button"></i></a>
-                                    <input class="cart_quantity_input" data-id="@item.Id" type="text" name="quantity" value="@item.Quontity" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" data-id="@item.Id" data-product-id="@item.Product.Id"><i class="fa fa-minus icon-button"></i></a>
+                                    <a class="cart_quantity_up" data-product-id="@item.Product.Id"><i class="fa fa-plus icon-button"></i></a>
+                                    <input class="cart_quantity_input" data-product-id="@item.Product.Id" type="text" name="quantity" value="@item.Quontity" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down" data-product-id="@item.Product.Id"><i class="fa fa-minus icon-button"></i></a>
                                 </div>
                             </td>
                             <td class="cart_total">
                                 <p class="cart_total_price">$@(item.Quontity * item.Product.Price)</p>
                             </td>
                             <td class="cart_delete">
-                                <a class="cart_quantity_delete" data-id="@item.Id"><i class="fa fa-times"></i></a>
+                                <a class="cart_quantity_delete" data-product-id="@item.Product.Id"><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                     }
@@ -156,7 +156,7 @@
                 },
 
                 onSetProductCount: function (e) {
-                    var id = $(e.delegateTarget).attr("data-id");
+                    var id = $(e.delegateTarget).attr("data-product-id");
                     var quontity = +$(e.delegateTarget).val();
                     var uri = "/cart/SetQuontity/?id=" + id + "&quontity=" + quontity;
                     $.get(uri).success(function (res) {
@@ -165,25 +165,23 @@
                 },
 
                 onIncreaceCount: function (e) {
-                    var id = $(e.delegateTarget).attr("data-id");
-                    var productId = $(e.delegateTarget).attr("data-product-id");
-                    var uri = "/cart/addtocart/?id=" + productId + "&quontity=1";
+                    var id = $(e.delegateTarget).attr("data-product-id");
+                    var uri = "/cart/addtocart/?id=" + id + "&quontity=1";
                     $.get(uri).success(function (res) {
                         Cart.checkCartItemRow(id, res);
                     });
                 },
 
                 onDecreaceCount: function (e) {
-                    var id = $(e.delegateTarget).attr("data-id");
-                    var productId = $(e.delegateTarget).attr("data-product-id");
-                    var uri = "/cart/RemoveFromCart/?id=" + productId + "&quontity=1";
+                    var id = $(e.delegateTarget).attr("data-product-id");
+                    var uri = "/cart/RemoveFromCart/?id=" + id + "&quontity=1";
                     $.get(uri).success(function (res) {
                         Cart.checkCartItemRow(id, res);
                     });
                 },
 
                 checkCartItemRow: function (id, cart) {
-                    var cartItem = $.grep(cart.CartItems, function (e) { return e.Id == id; })[0];
+                    var cartItem = $.grep(cart.CartItems, function (e) { return e.Product.Id == id; })[0];
 
                     if (cartItem && cartItem.Quontity > 0) {
                         $(".cart-item-" + id + " .cart_quantity_input").val(cartItem.Quontity);
@@ -201,7 +199,7 @@
                 },
 
                 onRemoveCartItem: function (e) {
-                    var id = $(e.delegateTarget).attr("data-id");
+                    var id = $(e.delegateTarget).attr("data-product-id");
                     var uri = "/cart/RemoveCartItem/?id=" + id;
                     $.get(uri).success(function (res) {
                         if (res.CartItems.length > 0) {
