@@ -3,9 +3,9 @@ using System.Data.Entity;
 
 namespace OriginalShirts.Dal
 {
-    public class ApplicationContext: DbContext
+    public class ApplicationContext : DbContext
     {
-        public ApplicationContext(): base("DefaultConnection")
+        public ApplicationContext() : base("DefaultConnection")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -13,13 +13,14 @@ namespace OriginalShirts.Dal
         public DbSet<Product> Shirts { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Tag> Tags{ get; set; }
+        public DbSet<Tag> Tags { get; set; }
         public DbSet<TagGroup> TagsGroups { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<NpDepartment> NpDepartments { get; set; }
-
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public static ApplicationContext Create()
         {

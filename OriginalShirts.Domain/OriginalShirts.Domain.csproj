@@ -52,6 +52,9 @@
     <Compile Include="Color.cs" />
     <Compile Include="EntityBase.cs" />
     <Compile Include="NpDepartment.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="OrderStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shirt.cs" />
     <Compile Include="Size.cs" />

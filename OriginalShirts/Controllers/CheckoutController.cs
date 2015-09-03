@@ -93,7 +93,19 @@ namespace OriginalShirts.Controllers
             using (ApplicationContext context = new ApplicationContext())
             {
                 dep = context.Set<NpDepartment>().Where(x => x.Id == model.NpDepartmentId).First();
+                Order order = UserCart.GetOrder();
+                order.NpDepartment = dep;
+                order.Status = OrderStatus.Submitted;
+
+                context.Set<Order>().Add(order);
+
+                context.SaveChanges();
             }
+
+            UpdateDbCart((cart, context) =>
+            {
+                cart.CartItems.Clear();
+            });
 
             var body = "<p>" +
                             "New Order Submitted" +
@@ -133,6 +145,11 @@ namespace OriginalShirts.Controllers
 
                 return Json(true, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public ActionResult OrderSubmitted()
+        {
+            return View();
         }
     }
 }

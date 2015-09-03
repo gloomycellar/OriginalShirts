@@ -137,6 +137,7 @@
 
                 $.get(url, params).success(function (res) {
                     console.log(res);
+                    document.location = "@Url.Action("OrderSubmitted", "Checkout")"
                 })
             },
         };

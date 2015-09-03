@@ -30,5 +30,18 @@ namespace OriginalShirts.Domain
 
         [JsonProperty(PropertyName = "cartItems")]
         public ICollection<CartItem> CartItems { get; }
+
+        public Order GetOrder() {
+            Order order = new Order();
+
+            order.UserId = UserId;
+            order.Status = OrderStatus.Default;
+            foreach (CartItem item in CartItems)
+            {
+                order.OrderItems.Add(new OrderItem(item.Product,item.Quontity));
+            }
+
+            return order;
+        }
     }
 }

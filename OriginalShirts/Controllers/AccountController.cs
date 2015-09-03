@@ -131,7 +131,7 @@ namespace OriginalShirts.Controllers
                     return View("LoginRegister", model);
             }
         }
-        
+
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
@@ -228,7 +228,7 @@ namespace OriginalShirts.Controllers
                 Guid userId = Guid.Parse(addedUser.Id);
 
                 using (ApplicationContext context = new ApplicationContext())
-                {   
+                {
                     UserDetail detail = new UserDetail();
                     detail.UserId = userId;
                     detail.Name = addedUser.UserName;
@@ -513,6 +513,15 @@ namespace OriginalShirts.Controllers
             return View();
         }
 
+        public ActionResult UserDetails()
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                UserDetail detail = context.Set<UserDetail>().Where(x => x.UserId == UserId).First();
+                return View(detail);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -561,7 +570,7 @@ namespace OriginalShirts.Controllers
             }
             return RedirectToAction("Index", "Product");
         }
-        
+
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)

@@ -80,7 +80,7 @@
                             <ul class="nav navbar-nav">
                                 @if (Request.IsAuthenticated)
                                 {
-                                    <li><a href=""><i class="fa fa-user"></i>@User.Identity.Name</a></li>
+                                    <li><a href="@Url.Action("UserDetails", "Account")"><i class="fa fa-user"></i>@User.Identity.Name</a></li>
                                 }
                                 <li><a href="@Url.Action("Index","Cart")"><i class="fa fa-shopping-cart"></i> Cart<span class="badge cart-budge" style="display:none" id="cart-budge"></span></a></li>
                                 @Html.Partial("_LoginPartial")
