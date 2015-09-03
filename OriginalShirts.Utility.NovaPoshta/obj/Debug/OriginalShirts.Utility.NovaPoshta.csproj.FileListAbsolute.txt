@@ -1,0 +1,16 @@
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Utility.NovaPoshta.exe.config
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Utility.NovaPoshta.exe
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Utility.NovaPoshta.pdb
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\EntityFramework.dll
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\EntityFramework.SqlServer.dll
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Dal.dll
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Domain.dll
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Dal.pdb
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\OriginalShirts.Domain.pdb
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\EntityFramework.xml
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\EntityFramework.SqlServer.xml
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\obj\Debug\OriginalShirts.Utility.NovaPoshta.csprojResolveAssemblyReference.cache
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\obj\Debug\OriginalShirts.Utility.NovaPoshta.exe
+E:\Projects\OriginalShirts\OriginalShirts.Utility.NovaPoshta\obj\Debug\OriginalShirts.Utility.NovaPoshta.pdb

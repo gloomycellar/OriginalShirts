@@ -1,0 +1,8 @@
+E:\Projects\OriginalShirts\OriginalShirts.Domain\bin\Debug\OriginalShirts.Domain.dll.config
+E:\Projects\OriginalShirts\OriginalShirts.Domain\bin\Debug\OriginalShirts.Domain.dll
+E:\Projects\OriginalShirts\OriginalShirts.Domain\bin\Debug\OriginalShirts.Domain.pdb
+E:\Projects\OriginalShirts\OriginalShirts.Domain\bin\Debug\Newtonsoft.Json.dll
+E:\Projects\OriginalShirts\OriginalShirts.Domain\bin\Debug\Newtonsoft.Json.xml
+E:\Projects\OriginalShirts\OriginalShirts.Domain\obj\Debug\OriginalShirts.Domain.csprojResolveAssemblyReference.cache
+E:\Projects\OriginalShirts\OriginalShirts.Domain\obj\Debug\OriginalShirts.Domain.dll
+E:\Projects\OriginalShirts\OriginalShirts.Domain\obj\Debug\OriginalShirts.Domain.pdb
