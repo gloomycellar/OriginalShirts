@@ -1,4 +1,4 @@
-﻿
+﻿@using OriginalShirts.Domain;
 @{
     ViewBag.Title = "Details";
 }
@@ -11,7 +11,7 @@
                     <!--product-details-->
                     <div class="col-sm-5">
                         <div class="view-product">
-                            <img src="@Model.Image" alt="" />
+                            <img src="@Model.Shirt.Image" alt="" />
                             <h3>ZOOM</h3>
                         </div>
                         <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -42,27 +42,95 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="product-information">
-                            <!--/product-information-->
-                            <img src="/images/product-details/new.jpg" class="newarrival" alt="" />
-                            <h2>@Model.Name</h2>
-                            <p>Web ID: @Model.Id</p>
-                            <img src="/images/product-details/rating.png" alt="" />
-                            <span>
-                                <span>US $@Model.Price</span>
-                                <label>Quantity:</label>
-                                <input type="text" value="1" id="quontity" />
-                                <button type="button" class="btn btn-fefault cart" id="addtoCart">
-                                    <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
-                                </button>
-                            </span>
-                            <p><b>Availability:</b> In Stock</p>
-                            <p><b>Condition:</b> New</p>
-                            <p><b>Brand:</b> E-SHOPPER</p>
-                            <a href=""><img src="/images/product-details/share.png" class="share img-responsive" alt="" /></a>
-                        </div><!--/product-information-->
+                            @*<img src="/images/product-details/new.jpg" class="newarrival" alt="" />*@
+                            <h2>@Model.Shirt.Name</h2>
+                            <p>
+                                Web ID: @Model.Shirt.Id
+                            </p>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label>Color:</label>
+                                    </td>
+                                    <td>
+                                        <select id="colors">
+                                            @foreach (Color color in Model.Colors)
+                                            {
+                                                <option value="@color.Id">@color.Name</option>
+                                            }
+                                        </select>
+                                        <div class="colors-example"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Size:</label>
+                                    </td>
+                                    <td>
+                                        <select id="sizes">
+                                            @foreach (Size size in Model.Sizes)
+                                            {
+                                                <option value="@size.Id">@size.Name</option>
+                                            }
+                                        </select>
+                                        <a>View size table</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Quantity:</label>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="1" id="quontity" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Availability:</label>
+                                    </td>
+                                    <td>
+                                        <div style="height: 41px; position: relative; top: 8px;">In Stock</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Model:</label>
+                                    </td>
+                                    <td>
+                                        <div style="height: 41px; position: relative; top: 8px;">Mes's t-shirt</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>Price:</label>
+                                    </td>
+                                    <td>
+                                        <span>US $@Model.Shirt.Price</span>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button type="button" class="btn btn-fefault cart pull-right" id="addtoCart">
+                                <i class="fa fa-shopping-cart"></i>
+                                Add to cart
+                            </button>
+                            @*<p>Web ID: @Model.Id</p>
+                                <img src="/images/product-details/rating.png" alt="" />
+                                <span>
+                                    <span>US $@Model.Price</span>
+                                    <label>Quantity:</label>
+                                    <input type="text" value="1" id="quontity" />
+                                    <button type="button" class="btn btn-fefault cart" id="addtoCart">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        Add to cart
+                                    </button>
+                                </span>
+                                <p><b>Availability:</b> In Stock</p>
+                                <p><b>Condition:</b> New</p>
+                                <p><b>Brand:</b> E-SHOPPER</p>
+                                <a href=""><img src="/images/product-details/share.png" class="share img-responsive" alt="" /></a>*@
+                        </div>
                     </div>
-                </div><!--/product-details-->
+                </div>
 
                 <div class="category-tab shop-details-tab">
                     <!--category-tab-->
@@ -259,14 +327,30 @@
     </div>
 </section>
 
-<input type="hidden" id="productId" value="@Model.Id" />
+<input type="hidden" id="productId" value="@Model.Shirt.Id" />
 
 @section scripts{
     <script>
+
         (function ($) {
             var details = {
                 init: function () {
-                    $("#addtoCart").click(this.onAddToCart)
+                    var that = this;
+                    $("#addtoCart").click(this.onAddToCart);
+                    $("#colors").change(this.onColorChange);
+
+                    var initialDataUrl = "@Url.Action("GetDetailsInitialData")";
+
+                    $.get(initialDataUrl).success(function (res) {
+                        that.sizes = $.grep(res, function (e) {
+                            return e.Key == "Sizes";
+                        })[0].Value;
+                        that.colors = $.grep(res, function (e) {
+                            return e.Key == "Colors";
+                        })[0].Value;
+
+                        that.onColorChange();
+                    })
                 },
 
                 onAddToCart: function () {
@@ -275,9 +359,16 @@
                     var uri = "/cart/addtocart/?id=" + id + "&quontity=" + quontity;
                     $.get(uri).success(function (res) {
                         BudgeCart.reload();
-                    }).fail(function (res) {
-
                     })
+                },
+
+                onColorChange: function (e) {
+                    var colorId = $("#colors").val();
+                    var cssColor = $.grep(details.colors, function (e) {
+                        return e.Id == colorId;
+                    })[0].StyleColor;
+
+                    $(".colors-example").css("background-color", cssColor);
                 }
             }
 

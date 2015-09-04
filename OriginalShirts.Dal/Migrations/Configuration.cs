@@ -31,13 +31,13 @@ namespace OriginalShirts.Dal.Migrations
             context.Set<Size>().Add(xxl);
 
             //White, Black, Red, Blue, Gray, Green, Pink
-            Color White = new Color("White");
-            Color Black = new Color("Black");
-            Color Red = new Color("Red");
-            Color Blue = new Color("Blue");
-            Color Gray = new Color("Gray");
-            Color Green = new Color("Green");
-            Color Pink = new Color("Pink");
+            Color White = new Color("White", "White");
+            Color Black = new Color("Black", "Black");
+            Color Red = new Color("Red", "Red");
+            Color Blue = new Color("Blue", "Blue");
+            Color Gray = new Color("Gray", "Gray");
+            Color Green = new Color("Green", "Green");
+            Color Pink = new Color("Pink", "Pink");
 
             context.Set<Color>().Add(White);
             context.Set<Color>().Add(Red);

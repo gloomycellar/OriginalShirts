@@ -1,6 +1,7 @@
 ﻿using OriginalShirts.Dal;
 using OriginalShirts.Domain;
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
@@ -41,12 +42,37 @@ namespace OriginalShirts.Controllers
             }
         }
 
+        public ActionResult GetDetailsInitialData()
+        {
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                List<Color> colors = context.Set<Color>().ToList();
+                List<Size> sizes = context.Set<Size>().ToList();
+
+                dynamic result = new ExpandoObject();
+                
+                result.Colors = colors;
+                result.Sizes = sizes;
+
+                return Json(result, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         public ActionResult Details(int id)
         {
             using (ApplicationContext context = new ApplicationContext())
             {
                 Product shirt = context.Set<Product>().Where(x => x.Id == id).FirstOrDefault();
-                return View(shirt);
+                List<Color> colors = context.Set<Color>().ToList();
+                List<Size> sizes = context.Set<Size>().ToList();
+
+                dynamic result = new ExpandoObject();
+
+                result.Shirt = shirt;
+                result.Colors = colors;
+                result.Sizes = sizes;
+
+                return View(result);
             }
         }
 

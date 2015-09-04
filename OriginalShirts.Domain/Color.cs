@@ -7,12 +7,16 @@ namespace OriginalShirts.Domain
     {
         public Color() { }
 
-        public Color(string name)
+        public Color(string name, string styleColor)
         {
             Name = name;
+            StyleColor = styleColor;
         }
 
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        [JsonProperty(PropertyName = "styleColor")]
+        public string StyleColor { get; set; }
     }
 }

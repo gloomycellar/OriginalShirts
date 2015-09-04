@@ -86,7 +86,7 @@ namespace OriginalShirts.Controllers
             public string Phone { get; set; }
         }
 
-        public async Task<ActionResult> SubmitOrder(SubmitViewModel model)
+        public ActionResult SubmitOrder(SubmitViewModel model)
         {
             NpDepartment dep = null;
 
@@ -136,6 +136,7 @@ namespace OriginalShirts.Controllers
 
             using (var smtp = new SmtpClient())
             {
+
                 //smtp.UseDefaultCredentials = true;
                 //smtp.Credentials = new NetworkCredential("", "");
                 //smtp.Host = "smtp.gmail.com";
@@ -143,7 +144,7 @@ namespace OriginalShirts.Controllers
                 //smtp.EnableSsl = true;
                 //await smtp.SendMailAsync(message);
 
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return Json(OrderStatus.Submitted, JsonRequestBehavior.AllowGet);
             }
         }
 
