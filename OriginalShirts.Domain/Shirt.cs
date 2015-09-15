@@ -16,6 +16,9 @@ namespace OriginalShirts.Domain
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
+        [JsonProperty(PropertyName = "description")]
+        public string Description { get; set; }
+
         [JsonProperty(PropertyName = "price")]
         public decimal Price { get; set; }
 

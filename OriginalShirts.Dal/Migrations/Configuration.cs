@@ -33,16 +33,17 @@ namespace OriginalShirts.Dal.Migrations
             //White, Black, Red, Blue, Gray, Green, Pink
             Color White = new Color("White", "White");
             Color Black = new Color("Black", "Black");
-            Color Red = new Color("Red", "Red");
-            Color Blue = new Color("Blue", "Blue");
-            Color Gray = new Color("Gray", "Gray");
-            Color Green = new Color("Green", "Green");
-            Color Pink = new Color("Pink", "Pink");
+            Color Blue = new Color("Blue", "#00b5e3");
+            Color Gray = new Color("Gray", "#aaaaaa");
+            Color Yellow = new Color("Yellow", "#e4c300");
+            Color Green = new Color("Green", "#66c926");
+            Color Pink = new Color("Pink", "#d44d78");
 
             context.Set<Color>().Add(White);
-            context.Set<Color>().Add(Red);
-            context.Set<Color>().Add(Blue);
+            context.Set<Color>().Add(Black);
             context.Set<Color>().Add(Gray);
+            context.Set<Color>().Add(Blue);
+            context.Set<Color>().Add(Yellow);
             context.Set<Color>().Add(Green);
             context.Set<Color>().Add(Pink);
 
@@ -348,44 +349,7 @@ namespace OriginalShirts.Dal.Migrations
                 {
                     context.Set<Tag>().Where(x => x.Name == "Fendi").First()
                 }
-            });
-
-            //-------------------------
-
-            //List < Tag > children = new List<Tag>()
-            //{
-            //    context.Set<Tag>().Where(x => x.Name == "Sportwear").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Nike").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Under Armour").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Adidas").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Puma").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Asics").First()
-            //};
-
-            //children = new List<Tag>()
-            //{
-            //    context.Set<Tag>().Where(x => x.Name == "Mens").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Fendi").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Guess").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Valentino").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Dior").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Versache").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Armani").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Prada").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Dolce And Gabbana").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Chanel").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Gucci").First()
-            //};
-
-            //children = new List<Tag>()
-            //{
-            //    context.Set<Tag>().Where(x => x.Name == "Womens").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Fendi").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Guess").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Valentino").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Dior").First(),
-            //    context.Set<Tag>().Where(x => x.Name == "Versache").First()
-            //};
+            });             
         }
     }
 }
