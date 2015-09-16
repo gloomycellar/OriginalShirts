@@ -1,8 +1,10 @@
-﻿using OriginalShirts.Dal;
+﻿using OriginalShirts.Common;
+using OriginalShirts.Dal;
 using OriginalShirts.Domain;
 using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -42,6 +44,15 @@ namespace OriginalShirts.Controllers
             }
         }
 
+        public ActionResult GetImage()
+        {
+            string yellowSquarePath = Path.Combine(Server.MapPath("/Design/Patterns"), "23005_4978.png");
+            string redSquarePath = Path.Combine(Server.MapPath("/Design/Patterns"), "Pic3.png");
+
+            byte[] result = ImageHelper.GetTestImage(yellowSquarePath, redSquarePath);
+            return this.File(result, "image/jpeg");
+        }
+
         public ActionResult GetDetailsInitialData()
         {
             using (ApplicationContext context = new ApplicationContext())
@@ -50,14 +61,14 @@ namespace OriginalShirts.Controllers
                 List<Size> sizes = context.Set<Size>().ToList();
 
                 dynamic result = new ExpandoObject();
-                
+
                 result.Colors = colors;
                 result.Sizes = sizes;
 
                 return Json(result, JsonRequestBehavior.AllowGet);
             }
         }
-        
+
         public ActionResult Details(int id)
         {
             using (ApplicationContext context = new ApplicationContext())
