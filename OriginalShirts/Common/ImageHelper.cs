@@ -2,14 +2,31 @@
 using ImageProcessor.Imaging;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
 namespace OriginalShirts.Common
 {
-    public class ImageHelper
+    public static class ImageHelper
     {
+        public static string PatternBaseUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["PatternBaseUrl"];
+            }
+        }
+
+        public static string LogoBaseUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["LogoBaseUrl"];
+            }
+        }
+
         public static byte[] GetTestImage(string path1, string path2)
         {
             //Standart functionality

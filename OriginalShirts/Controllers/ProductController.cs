@@ -27,7 +27,6 @@ namespace OriginalShirts.Controllers
 
                 Product[] shirts = query.OrderBy(x => x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToArray();
 
-
                 dynamic result = new ExpandoObject();
                 result.Shirts = shirts;
                 result.PageCount = Math.Ceiling((double)query.Count() / pageSize);
@@ -44,13 +43,19 @@ namespace OriginalShirts.Controllers
             }
         }
 
-        public ActionResult GetImage()
+        public ActionResult GenerateImage(int productId, int patternId)
         {
-            string yellowSquarePath = Path.Combine(Server.MapPath("/Design/Patterns"), "23005_4978.png");
-            string redSquarePath = Path.Combine(Server.MapPath("/Design/Patterns"), "Pic3.png");
+            using (ApplicationContext context = new ApplicationContext())
+            {
+                string patternFileName = context.Set<ImagePattern>().Where(x => x.Id == patternId).First().FileName;
+                string logoFileName = context.Set<Product>().Where(x => x.Id == productId).First().Logo;
 
-            byte[] result = ImageHelper.GetTestImage(yellowSquarePath, redSquarePath);
-            return this.File(result, "image/jpeg");
+                string patterPath = Path.Combine(Server.MapPath(ImageHelper.PatternBaseUrl), patternFileName);
+                string redSquarePath = Path.Combine(Server.MapPath(ImageHelper.LogoBaseUrl), logoFileName);
+
+                byte[] result = ImageHelper.GetTestImage(patterPath, redSquarePath);
+                return File(result, "image/jpeg");
+            }
         }
 
         public ActionResult GetDetailsInitialData()

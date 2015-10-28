@@ -9,4 +9,11 @@
         Complete,
         Rejected
     }
+
+    public enum ImagePatternType
+    {
+        Men,
+        Women,
+        Children
+    }
 }

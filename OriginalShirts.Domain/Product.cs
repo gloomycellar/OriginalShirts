@@ -25,12 +25,15 @@ namespace OriginalShirts.Domain
         [JsonProperty(PropertyName = "image")]
         public string Image { get; set; }
 
+        [JsonProperty(PropertyName = "logo")]
+        public string Logo { get; set; }
+
         [JsonProperty(PropertyName = "size")]
         public Size Size { get; set; }
 
         [JsonProperty(PropertyName = "color")]
         public Color Color { get; set; }
-
+        
         [JsonProperty(PropertyName = "tags")]
         public ICollection<Tag> Tags { get; set; }
     }

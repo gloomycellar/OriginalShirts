@@ -21,6 +21,7 @@ namespace OriginalShirts.Dal
         public DbSet<NpDepartment> NpDepartments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ImagePattern> ImagePatterns { get; set; }
 
         public static ApplicationContext Create()
         {
