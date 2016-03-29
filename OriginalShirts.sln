@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OriginalShirts.Dal", "Origi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OriginalShirts.Domain", "OriginalShirts.Domain\OriginalShirts.Domain.csproj", "{65FECAFC-885D-405A-A2FE-8034233201BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OriginalShirts.Utility.NovaPoshta", "OriginalShirts.Utility.NovaPoshta\OriginalShirts.Utility.NovaPoshta.csproj", "{50FC7A27-C710-4078-BF35-969C42902CB3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NovaPoshta", "OriginalShirts.Utility.NovaPoshta\NovaPoshta.csproj", "{50FC7A27-C710-4078-BF35-969C42902CB3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{DCBD86FE-2BA1-46D9-BC5F-7A5A638AA242}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +38,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{50FC7A27-C710-4078-BF35-969C42902CB3} = {DCBD86FE-2BA1-46D9-BC5F-7A5A638AA242}
 	EndGlobalSection
 EndGlobal

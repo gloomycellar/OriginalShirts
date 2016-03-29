@@ -50,29 +50,37 @@ namespace OriginalShirts.Dal.Migrations
             context.Set<TagGroup>().Add(new TagGroup("Sportwear"));
             context.Set<TagGroup>().Add(new TagGroup("Mens"));
             context.Set<TagGroup>().Add(new TagGroup("Womens"));
-
-            context.Set<ImagePattern>().Add(new ImagePattern("21988_478.png", ImagePatternType.Men));
-            context.Set<ImagePattern>().Add(new ImagePattern("219878_478.png", ImagePatternType.Men));
-            context.Set<ImagePattern>().Add(new ImagePattern("219884_478.png", ImagePatternType.Men));
-            context.Set<ImagePattern>().Add(new ImagePattern("219885_478.png", ImagePatternType.Men));
-            context.Set<ImagePattern>().Add(new ImagePattern("219887_478.png", ImagePatternType.Men));
-            context.Set<ImagePattern>().Add(new ImagePattern("2198855_478.png", ImagePatternType.Men));
-
-            context.Set<ImagePattern>().Add(new ImagePattern("23005_478 (1).png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("23005_478.png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("23005_4978.png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("230052_478.png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("230054_478.png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("230055_478.png", ImagePatternType.Women));
-            context.Set<ImagePattern>().Add(new ImagePattern("230056_478.png", ImagePatternType.Women));
-
-            context.Set<ImagePattern>().Add(new ImagePattern("1.png", ImagePatternType.Children));
-            context.Set<ImagePattern>().Add(new ImagePattern("2.png", ImagePatternType.Children));
-            context.Set<ImagePattern>().Add(new ImagePattern("3.png", ImagePatternType.Children));
-            context.Set<ImagePattern>().Add(new ImagePattern("4.png", ImagePatternType.Children));
-            context.Set<ImagePattern>().Add(new ImagePattern("5.png", ImagePatternType.Children));
-
+            
             context.SaveChanges();
+
+            Color white = context.Set<Color>().Where(x => x.Name == "White").First();
+            Color black = context.Set<Color>().Where(x => x.Name == "Black").First();
+            Color gray = context.Set<Color>().Where(x => x.Name == "Gray").First();
+            Color blue = context.Set<Color>().Where(x => x.Name == "Blue").First();
+            Color yellow = context.Set<Color>().Where(x => x.Name == "Yellow").First();
+            Color green = context.Set<Color>().Where(x => x.Name == "Green").First();
+            Color pink = context.Set<Color>().Where(x => x.Name == "Pink").First();
+
+            context.Set<ImagePattern>().Add(new ImagePattern("21988_478.png", blue, ImagePatternType.Men));
+            context.Set<ImagePattern>().Add(new ImagePattern("219878_478.png", white, ImagePatternType.Men));
+            context.Set<ImagePattern>().Add(new ImagePattern("219884_478.png", gray, ImagePatternType.Men));
+            context.Set<ImagePattern>().Add(new ImagePattern("219885_478.png", yellow, ImagePatternType.Men));
+            context.Set<ImagePattern>().Add(new ImagePattern("219887_478.png", black, ImagePatternType.Men));
+            context.Set<ImagePattern>().Add(new ImagePattern("2198855_478.png", green, ImagePatternType.Men));
+
+            context.Set<ImagePattern>().Add(new ImagePattern("23005_478 (1).png", pink, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("23005_478.png", white, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("23005_4978.png", blue, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("230052_478.png", green, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("230054_478.png", yellow, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("230055_478.png", black, ImagePatternType.Women));
+            context.Set<ImagePattern>().Add(new ImagePattern("230056_478.png", gray, ImagePatternType.Women));
+
+            context.Set<ImagePattern>().Add(new ImagePattern("1.png", white, ImagePatternType.Child));
+            context.Set<ImagePattern>().Add(new ImagePattern("2.png", black, ImagePatternType.Child));
+            context.Set<ImagePattern>().Add(new ImagePattern("3.png", gray, ImagePatternType.Child));
+            context.Set<ImagePattern>().Add(new ImagePattern("4.png", blue, ImagePatternType.Child));
+            context.Set<ImagePattern>().Add(new ImagePattern("5.png", yellow, ImagePatternType.Child));
 
             HashSet<TagGroup> Sportwear = new HashSet<TagGroup>()
             {

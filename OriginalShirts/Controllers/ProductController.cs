@@ -62,13 +62,11 @@ namespace OriginalShirts.Controllers
         {
             using (ApplicationContext context = new ApplicationContext())
             {
-                List<Color> colors = context.Set<Color>().ToList();
-                List<Size> sizes = context.Set<Size>().ToList();
-
                 dynamic result = new ExpandoObject();
 
-                result.Colors = colors;
-                result.Sizes = sizes;
+                result.Colors = context.Set<Color>().ToList();
+                result.Sizes = context.Set<Size>().ToList();
+                result.ImagePatterns = context.Set<ImagePattern>().ToList();
 
                 return Json(result, JsonRequestBehavior.AllowGet);
             }

@@ -7,8 +7,8 @@
     <ProjectGuid>{50FC7A27-C710-4078-BF35-969C42902CB3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OriginalShirts.Utility.NovaPoshta</RootNamespace>
-    <AssemblyName>OriginalShirts.Utility.NovaPoshta</AssemblyName>
+    <RootNamespace>NovaPoshta</RootNamespace>
+    <AssemblyName>NovaPoshta</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

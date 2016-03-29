@@ -6,12 +6,12 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-10 padding-right">
+            <div class="padding-right">
                 <div class="product-details">
                     <!--product-details-->
                     <div class="col-sm-5">
                         <div class="view-product">
-                            <img src="@Model.Shirt.Image" alt="" />
+                            <img id="detail-image-preview" src="@Model.Shirt.Image" alt="" />
                             <h3>ZOOM</h3>
                         </div>
                         <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -50,6 +50,19 @@
                             <table>
                                 <tr>
                                     <td>
+                                        <label>Type:</label>
+                                    </td>
+                                    <td>
+                                        <select id="types">
+                                            <option value="@ImagePatternType.Men">Men</option>
+                                            <option value="@ImagePatternType.Women">Women</option>
+                                            <option value="@ImagePatternType.Child">Child</option>
+                                        </select>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
                                         <label>Color:</label>
                                     </td>
                                     <td>
@@ -59,7 +72,7 @@
                                                 <option value="@color.Id">@color.Name</option>
                                             }
                                         </select>
-                                        <div class="colors-example"></div>
+                                        @*<div class="colors-example"></div>*@
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,9 +86,10 @@
                                                 <option value="@size.Id">@size.Name</option>
                                             }
                                         </select>
-                                        <a>View size table</a>
+                                        @*<a>View size table</a>*@
                                     </td>
                                 </tr>
+                                
                                 <tr>
                                     <td>
                                         <label>Quantity:</label>
@@ -92,14 +106,14 @@
                                         <div style="height: 41px; position: relative; top: 8px;">In Stock</div>
                                     </td>
                                 </tr>
-                                <tr>
+                                @*<tr>
                                     <td>
                                         <label>Model:</label>
                                     </td>
                                     <td>
                                         <div style="height: 41px; position: relative; top: 8px;">Mes's t-shirt</div>
                                     </td>
-                                </tr>
+                                </tr>*@
                                 <tr>
                                     <td>
                                         <label>Price:</label>
@@ -334,6 +348,11 @@
 
         (function ($) {
             var details = {
+
+                sizes: null,
+                colors: null,
+                imagePatterns: null,
+
                 init: function () {
                     var that = this;
                     $("#addtoCart").click(this.onAddToCart);
@@ -348,8 +367,9 @@
                         that.colors = $.grep(res, function (e) {
                             return e.Key == "Colors";
                         })[0].Value;
-
-                        that.onColorChange();
+                        that.imagePatterns = $.grep(res, function (e) {
+                            return e.Key == "ImagePatterns";
+                        })[0].Value;
                     })
                 },
 
@@ -362,76 +382,80 @@
                     })
                 },
 
-                onColorChange: function (e) {
-                    var colorId = $("#colors").val();
-                    var cssColor = $.grep(details.colors, function (e) {
-                        return e.Id == colorId;
-                    })[0].StyleColor;
+                onProductChange: function (e) {
+                    var color = $("#colors").val();
+                    var type = $("#types").val();
+                    var productId = $("#productId").val();
 
-                    $(".colors-example").css("background-color", cssColor);
+                    var parrternId = $.grep(this.imagePatterns, function (e) {
+                        return e.PatternType == type && e.Color.Name == color;
+                    })[0].Id;
+
+                    var imageUrl = "@Url.Action("GenerateImage")" + "?productId=" + productId + "&patternId=" + parrternId;
+                    $("#detail-image-preview").attr("src", imageUrl);
                 }
             }
 
             details.init();
         })(jQuery)
 
-        $(function () {
-            $("a[rel^='prettyPhoto']").prettyPhoto({
-                default_width: 500,
-                default_height: 344,
-                markup: '<div class="pp_pic_holder"> \
-						<div class="ppt">&nbsp;</div> \
-						<div class="pp_top"> \
-							<div class="pp_left"></div> \
-							<div class="pp_middle"></div> \
-							<div class="pp_right"></div> \
-						</div> \
-						<div class="pp_content_container"> \
-							<div class="pp_left"> \
-							<div class="pp_right"> \
-								<div class="pp_content"> \
-									<div class="pp_loaderIcon"></div> \
-									<div class="pp_fade"> \
-										<a href="#" class="pp_expand" title="Expand the image">Expand</a> \
-										<div class="pp_hoverContainer"> \
-											<a class="pp_next" href="#">next</a> \
-											<a class="pp_previous" href="#">previous</a> \
-										</div> \
-										<div id="pp_full_res"></div> \
-										<div class="pp_details"> \
-											<div class="pp_nav"> \
-												<a href="#" class="pp_arrow_previous">Previous</a> \
-												<p class="currentTextHolder">0/0</p> \
-												<a href="#" class="pp_arrow_next">Next</a> \
-											</div> \
-											<p class="pp_description"></p> \
-											{pp_social} \
-											<a class="pp_close" href="#">Close</a> \
-										</div> \
-									</div> \
-								</div> \
-							</div> \
-							</div> \
-						</div> \
-						<div class="pp_bottom"> \
-							<div class="pp_left"></div> \
-							<div class="pp_middle"></div> \
-							<div class="pp_right"></div> \
-						</div> \
-					</div> \
-					<div class="pp_overlay"></div>',
-                gallery_markup: '<div class="pp_gallery"> \
-								<a href="#" class="pp_arrow_previous">Previous</a> \
-								<div> \
-									<ul> \
-										{gallery} \
-									</ul> \
-								</div> \
-								<a href="#" class="pp_arrow_next">Next</a> \
-							</div>',
-                image_markup: '<img id="fullResImage" src="{path}" />'
-            });
-        })
+        //$(function () {
+        //    $("a[rel^='prettyPhoto']").prettyPhoto({
+        //        default_width: 500,
+        //        default_height: 344,
+        //        markup: '<div class="pp_pic_holder"> \
+        //				<div class="ppt">&nbsp;</div> \
+        //				<div class="pp_top"> \
+        //					<div class="pp_left"></div> \
+        //					<div class="pp_middle"></div> \
+        //					<div class="pp_right"></div> \
+        //				</div> \
+        //				<div class="pp_content_container"> \
+        //					<div class="pp_left"> \
+        //					<div class="pp_right"> \
+        //						<div class="pp_content"> \
+        //							<div class="pp_loaderIcon"></div> \
+        //							<div class="pp_fade"> \
+        //								<a href="#" class="pp_expand" title="Expand the image">Expand</a> \
+        //								<div class="pp_hoverContainer"> \
+        //									<a class="pp_next" href="#">next</a> \
+        //									<a class="pp_previous" href="#">previous</a> \
+        //								</div> \
+        //								<div id="pp_full_res"></div> \
+        //								<div class="pp_details"> \
+        //									<div class="pp_nav"> \
+        //										<a href="#" class="pp_arrow_previous">Previous</a> \
+        //										<p class="currentTextHolder">0/0</p> \
+        //										<a href="#" class="pp_arrow_next">Next</a> \
+        //									</div> \
+        //									<p class="pp_description"></p> \
+        //									{pp_social} \
+        //									<a class="pp_close" href="#">Close</a> \
+        //								</div> \
+        //							</div> \
+        //						</div> \
+        //					</div> \
+        //					</div> \
+        //				</div> \
+        //				<div class="pp_bottom"> \
+        //					<div class="pp_left"></div> \
+        //					<div class="pp_middle"></div> \
+        //					<div class="pp_right"></div> \
+        //				</div> \
+        //			</div> \
+        //			<div class="pp_overlay"></div>',
+        //        gallery_markup: '<div class="pp_gallery"> \
+        //						<a href="#" class="pp_arrow_previous">Previous</a> \
+        //						<div> \
+        //							<ul> \
+        //								{gallery} \
+        //							</ul> \
+        //						</div> \
+        //						<a href="#" class="pp_arrow_next">Next</a> \
+        //					</div>',
+        //        image_markup: '<img id="fullResImage" src="{path}" />'
+        //    });
+        //})
 
 
     </script>

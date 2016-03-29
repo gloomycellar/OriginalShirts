@@ -8,15 +8,18 @@ namespace OriginalShirts.Domain
         {
         }
 
-        public ImagePattern(string fileName, ImagePatternType patternType)
+        public ImagePattern(string fileName, Color color, ImagePatternType patternType)
         {
             FileName = fileName;
             PatternType = patternType;
+            Color = color;
         }
 
         [JsonProperty(PropertyName = "fileName")]
         public string FileName { get; set; }
 
         public ImagePatternType PatternType { get; set; }
+
+        public Color Color { get; set; }
     }
 }

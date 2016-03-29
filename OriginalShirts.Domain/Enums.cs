@@ -14,6 +14,6 @@
     {
         Men,
         Women,
-        Children
+        Child
     }
 }
