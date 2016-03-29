@@ -89,13 +89,13 @@
                                         @*<a>View size table</a>*@
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td>
                                         <label>Quantity:</label>
                                     </td>
                                     <td>
-                                        <input type="text" value="1" id="quontity" />
+                                        <input type="tel" value="1" id="quontity" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -107,19 +107,19 @@
                                     </td>
                                 </tr>
                                 @*<tr>
-                                    <td>
-                                        <label>Model:</label>
-                                    </td>
-                                    <td>
-                                        <div style="height: 41px; position: relative; top: 8px;">Mes's t-shirt</div>
-                                    </td>
-                                </tr>*@
+                                        <td>
+                                            <label>Model:</label>
+                                        </td>
+                                        <td>
+                                            <div style="height: 41px; position: relative; top: 8px;">Mes's t-shirt</div>
+                                        </td>
+                                    </tr>*@
                                 <tr>
                                     <td>
                                         <label>Price:</label>
                                     </td>
                                     <td>
-                                        <span>US $@Model.Shirt.Price</span>
+                                        <span id="price">US $@Model.Shirt.Price</span>
                                     </td>
                                 </tr>
                             </table>
@@ -342,6 +342,7 @@
 </section>
 
 <input type="hidden" id="productId" value="@Model.Shirt.Id" />
+<input type="hidden" id="priceForOne" value="@Model.Shirt.Price" />
 
 @section scripts{
     <script>
@@ -352,11 +353,14 @@
                 sizes: null,
                 colors: null,
                 imagePatterns: null,
+                product: null,
 
                 init: function () {
                     var that = this;
                     $("#addtoCart").click(this.onAddToCart);
                     $("#colors").change(this.onColorChange);
+                    $("#quontity").focusout(this.onQuontityChange);
+                    $("#quontity").keydown(this.validateQuontity);
 
                     var initialDataUrl = "@Url.Action("GetDetailsInitialData")";
 
@@ -370,7 +374,7 @@
                         that.imagePatterns = $.grep(res, function (e) {
                             return e.Key == "ImagePatterns";
                         })[0].Value;
-                    })
+                    });
                 },
 
                 onAddToCart: function () {
@@ -393,6 +397,34 @@
 
                     var imageUrl = "@Url.Action("GenerateImage")" + "?productId=" + productId + "&patternId=" + parrternId;
                     $("#detail-image-preview").attr("src", imageUrl);
+                },
+
+                onQuontityChange: function () {
+                    var priceForOne = parseFloat($("#priceForOne").val());
+                    var quontity = $("#quontity").val();
+
+                    $("#price").text("US $" + priceForOne * quontity + ",00");
+                },
+
+                validateQuontity: function (e) {
+                   
+                    // Allow: backspace, delete, tab, escape, enter and .
+                    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                        // Allow: Ctrl+A
+                        (e.keyCode == 65 && e.ctrlKey === true) ||
+                        // Allow: Ctrl+C
+                        (e.keyCode == 67 && e.ctrlKey === true) ||
+                        // Allow: Ctrl+X
+                        (e.keyCode == 88 && e.ctrlKey === true) ||
+                        // Allow: home, end, left, right
+                        (e.keyCode >= 35 && e.keyCode <= 39)) {
+                        // let it happen, don't do anything
+                        return;
+                    }
+                    // Ensure that it is a number and stop the keypress
+                    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                        e.preventDefault();
+                    }
                 }
             }
 
