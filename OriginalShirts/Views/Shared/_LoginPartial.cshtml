@@ -18,7 +18,7 @@ else
     <ul class="nav navbar-nav navbar-right">
         @*<li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
         <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
-        <li><a href="@Url.Action("Register", "Account")" id='registerLink'><i class="fa fa-lock"></i> Register</a></li>
-        <li><a href="@Url.Action("Login", "Account")" id='loginLink'><i class="fa fa-lock"></i> Login</a></li>
+        <li>@*<a href="@Url.Action("Register", "Account")" id='registerLink'><i class="fa fa-lock"></i> Register</a>*@</li>
+        <li><a href="@Url.Action("Login", "Account")" id='loginLink'><i class="fa fa-lock"></i> Login or Register</a></li>
     </ul>
 }
